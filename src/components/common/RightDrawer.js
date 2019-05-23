@@ -4,20 +4,21 @@ import PropTypes from 'prop-types';
 //Material Styles
 import {withStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import Drawer from "@material-ui/core/Drawer";
 
 const styles= theme =>({
-  footer:{
+  RightDrawer:{
     backgroundColor : theme.palette.background.paper,
-    maringTop: theme.spacing.unit * 8,
+    border:'1px solid black',
     padding: `${theme.spacing.unit * 1}px 0`
   }
 });
 
-const Footer = (props) => {
+const RightDrawer = (props) => {
   const {classes} =props;
 
   return(
-    <footer className={classes.footer}>
+    <Drawer className={classes.RightDrawer}>
       <Typography 
         component="p" 
         variant="subtitle1"
@@ -26,12 +27,12 @@ const Footer = (props) => {
       >
         my company
       </Typography>
-    </footer>
+    </Drawer>
   );
 }
 
-Footer.propTypes = {
+RightDrawer.propTypes = {
   classes:PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(Footer);
+export default withStyles(styles)(RightDrawer);
