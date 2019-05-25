@@ -11,37 +11,48 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 
 const styles = theme => ({
+  cardGrid:{
+    minHeight: '400px',
+  },
   card: {
-    display: 'block',
-    width:'100%',
+    display: "block",
+    width: "100%"
+  },
+  cardTitle: {
+    textAlign: "center",
+    padding: theme.spacing.unit * 1
   },
   cardContent: {
-    flex: 1
+    display: "block",
+    padding: theme.spacing.unit * 1
   }
 });
 
 const TagTests = [
   {
     id: 1,
-    tagName: 'React',
+    tagName: "React"
   },
   {
     id: 2,
-    tagName: 'React',
-  },
+    tagName: "React"
+  }
 ];
 
-const Tag = (props) => {
+const Tag = props => {
   const { classes } = props;
 
   return (
-    <Grid container  className={classes.cardGrid}>
+    <Grid container className={classes.cardGrid}>
       <Card className={classes.card}>
-        {TagTests.map(tag=>(
+        <Typography className={classes.cardTitle} variant="h5" color="primary">
+          Tag
+        </Typography>
+        {TagTests.map(tag => (
           <CardContent key={tag.id} className={classes.cardContent}>
-             <Typography variant="subtitle1" color="primary">
-                  {tag.tagName}
-              </Typography>
+            <Typography align="center" variant="subtitle1" color="primary">
+              {tag.tagName}
+            </Typography>
           </CardContent>
         ))}
       </Card>
