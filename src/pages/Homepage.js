@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 import { PageTemplate } from "components/common";
 import { PostList, Card, Tag } from "components/main";
+import { Pagination } from 'components/list'
 
 const Homepage = () => {
   return (
