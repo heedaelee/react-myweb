@@ -15,7 +15,7 @@ const RsideWidth = 100;
 
 const styles = theme => ({
   root: {
-    display: "flex"
+    display: "flex",
   },
   drawer: {
     [theme.breakpoints.up("sm")]: {
@@ -40,11 +40,10 @@ const styles = theme => ({
     padding: theme.spacing.unit * 10,
     height: "100vh",
     overflow: "auto",
-    border: "3px solid"
   }
 });
 
-class ResponsiveDrawer extends React.Component {
+class PageTemplate extends React.Component {
   state = {
     mobileOpen: false
   };
@@ -55,7 +54,6 @@ class ResponsiveDrawer extends React.Component {
 
   render() {
     const { classes, theme } = this.props;
-    console.log(<Drawer />);
     const drawer = (
       <div>
         <div className={classes.toolbar} />
@@ -111,7 +109,7 @@ class ResponsiveDrawer extends React.Component {
   }
 }
 
-ResponsiveDrawer.propTypes = {
+PageTemplate.propTypes = {
   classes: PropTypes.object.isRequired,
   // Injected by the documentation to work in an iframe.
   // You won't need it on your project.
@@ -119,4 +117,4 @@ ResponsiveDrawer.propTypes = {
   theme: PropTypes.object.isRequired
 };
 
-export default withStyles(styles, { withTheme: true })(ResponsiveDrawer);
+export default withStyles(styles, { withTheme: true })(PageTemplate);

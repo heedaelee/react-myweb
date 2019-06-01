@@ -1,0 +1,61 @@
+.markdown-render {
+  blockquote {
+    border-left: 4px solid;
+    padding: 1rem;
+    margin-left: 0;
+    margin-right: 0;
+    p {
+      margin: 0;
+    }
+  }
+
+  h1, h2, h3, h4 {
+    font-weight: 500;
+  }
+
+  // 텍스트 사이의 코드
+  h1, h2, h3, h4, h5, p {
+    code {
+      font-family: 'D2 Coding';
+      background: gray;
+      padding: 0.25rem;
+      color: blue;
+      border: 1px solid ;
+      border-radius: 2px;
+    }
+  }
+
+  // 코드 블록
+  code[class*="language-"], pre[class*="language-"] {
+    font-family: 'D2 Coding';
+  }
+
+  a {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  // 표 스타일
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  table, th, td {
+    border: 1px solid ;
+  }
+
+  th, td {
+    font-size: 0.9rem;
+    padding: 0.25rem;
+    text-align: left;
+  }
+
+  // 이미지 최대 사이즈 설정 및 중앙 정렬
+  img {
+    max-width: 100%;
+    margin: 0 auto;
+    display: block;
+  }
+}

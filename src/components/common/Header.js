@@ -14,10 +14,9 @@ const styles = theme => ({
   appBar: {
     flex: 1,
     marginLeft: drawerWidth,
-    border: "3px solid black",
     marginBottom: theme.spacing.unit * 4,
     [theme.breakpoints.up("sm")]: {
-      width: `calc(100% - ${drawerWidth}px)`
+      width: `100%`
     },
     backgroundColor: theme.palette.background.paper
   },
@@ -27,8 +26,8 @@ const styles = theme => ({
       display: "none"
     }
   },
-  menuIcon : {
-    color:'#4a4a4a',
+  menuIcon: {
+    color: "#4a4a4a"
   }
 });
 
@@ -45,9 +44,7 @@ class Header extends React.Component {
             onClick={drawerToggle}
             className={classes.menuButton}
           >
-            <MenuIcon 
-              className={classes.menuIcon}
-            />
+            <MenuIcon className={classes.menuIcon} />
           </IconButton>
           <Typography variant="h6" color="inherit" noWrap>
             {/* David Home */}
