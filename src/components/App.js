@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import {Switch, Route} from 'react-router-dom';
-import {Homepage,Editorpage} from 'pages';
+import {Homepage,Editorpage,Postpage} from 'pages';
 
 
 class App extends Component {
@@ -9,9 +9,10 @@ class App extends Component {
       <Switch>
         <Route exact path="/" component={Homepage} />
         <Route path="/editor" component={Editorpage} /> 
+        <Route path="/posts" component={Postpage} />
         {/* 
         <Route exact path="/page/:page" component={Homepage} />
-        <Route path="/posts/:id" component={Postpage} />
+        
         
         */}
       </Switch>

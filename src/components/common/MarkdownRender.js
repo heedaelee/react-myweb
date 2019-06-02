@@ -30,18 +30,6 @@ class MarkdownRender extends Component {
     })
   }
 
-//SSR 마크다운 처리
-constructor(props) {
-  super(props);
-
-  const { markdown } = props;
-// 서버사이드 렌더링에서도 마크다운 처리가 되도록 constructor 쪽에서도 구현합니다.
-  this.state = {
-    html: markdown ? marked(props.markdown, {
-      breaks: true, sanitize: true
-    }) : ''
-  }
-}
 
 componentDidUpdate(prevProps, prevState) {
    // markdown 값이 변경되면 renderMarkdown을 호출합니다.

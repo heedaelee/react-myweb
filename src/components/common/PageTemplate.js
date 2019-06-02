@@ -21,13 +21,13 @@ const styles = theme => ({
     [theme.breakpoints.up("sm")]: {
       width: drawerWidth,
       flexShrink: 0
-    }
+    },
   },
   rSidebar: {
-    [theme.breakpoints.up("sm")]: {
+    [theme.breakpoints.up("md")]: {
       width: RsideWidth,
-      flexShrink: 0
-    }
+      flexShrink: 0,
+    },
   },
 
   toolbar: theme.mixins.toolbar,
@@ -40,6 +40,8 @@ const styles = theme => ({
     padding: theme.spacing.unit * 10,
     height: "100vh",
     overflow: "auto",
+    borderRight: '1px solid rgba(0, 0, 0, 0.12)',
+    background: 'white',
   }
 });
 
@@ -101,8 +103,8 @@ class PageTemplate extends React.Component {
           <div className={classes.appBarSpacer} />
           {this.props.children}
         </main>
-        <Hidden xsDown implementation="css">
-          <div className={classes.rSidebar} />
+        <Hidden xsDown >
+          <div className={classes.rSidebar} style={{background:'white'}}  />
         </Hidden>
       </div>
     );

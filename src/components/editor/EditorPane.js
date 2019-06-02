@@ -15,7 +15,7 @@ class EditorPane extends Component {
   editor = null;
   codeMirror = null;
   cursor = null;
-
+  
   initializeEditor = () => {
     this.codeMirror = CodeMirror(this.editor, {
       mode: 'markdown',
@@ -31,13 +31,16 @@ class EditorPane extends Component {
   }
 
   handleChange = (e) => {
-    const {onChangeInput} = this.props;
+    const {onChangeInput} = this.props; //컨테이너 컴포넌트에서 차후에 props로 받아옴
     const {value,name} = e.target;
-
+    console.log(name,value);
     onChangeInput({name,value});
+    
+    
   }
 
   handleChangeMarkdown = (body) => {
+    console.log('mark',this.props);
     const {onChangeInput} =this.props;
 
     this.cursor = body.getCursor();
@@ -58,6 +61,7 @@ class EditorPane extends Component {
 
   render() {
     const {title} = this.props;
+    console.log(this.props);
     const {handleChange} = this;
 
     return (
