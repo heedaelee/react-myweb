@@ -24,6 +24,7 @@ class EditorPane extends Component {
       lineWrapping: true
     });
     this.codeMirror.on('change', this.handleChangeMarkdown);
+    this.codeMirror.setSize(null, '81vh');
   }
 
   componentDidMount() {

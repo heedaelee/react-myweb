@@ -10,7 +10,7 @@ import { menuList } from "components/common/menuList";
 
 import "./EditorTemplate.scss";
 import { drawerWidth } from "components/common/commonCss";
-import { EditorHeader } from "components/editor";
+import EditorHeaderContainer from "../../containers/editor/EditorHeaderContainer";
 
 const styles = theme => ({
   root: {
@@ -81,7 +81,7 @@ class EditorTemplate extends Component {
     return (
       <div className="editor-template">
         <CssBaseLine />
-        <EditorHeader drawerToggle={this.handleDrawerToggle} />
+        <EditorHeaderContainer drawerToggle={this.handleDrawerToggle} />
         <nav className={classes.drawer}>
           <Drawer
             container={this.props.container}

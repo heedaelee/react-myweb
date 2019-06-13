@@ -103,12 +103,14 @@ exports.update = async ctx => {
   }
 };
 
-exports.read = async ctx => {
+/*
+  GET /api/posts/:id
+*/
+exports.read = async (ctx) => {
   const { id } = ctx.params;
-
   try {
     const post = await Post.findById(id).exec();
-
+    // 포스트가 존재하지 않음
     if (!post) {
       ctx.status = 404;
       return;

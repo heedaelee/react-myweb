@@ -4,14 +4,16 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 
 import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
-import Button from "@material-ui/core/Button";
+import { Link } from "react-router-dom";
+import moment from "moment";
+import MarkdownRender from "components/common/MarkdownRender";
 
 const styles = theme => ({
   mainGrid: {
     marginTop: theme.spacing.unit * 3
   },
+  appBarSpacer: theme.mixins.toolbar,
   postInfo: {
     marginBottom: "15px"
   },
@@ -20,37 +22,59 @@ const styles = theme => ({
     marginTop: "-105px",
     color: "#555555"
   },
+  subText: {
+    display: "flex",
+    alignItems: "center",
+    padding: "10px 0px"
+  },
   tags: {
-    marginTop: "1rem",
-    fontSize: "1.25rem",
-    fontWeight: "500"
+    fontSize: "1rem",
+    fontWeight: "500",
+    marginRight: "15px",
+    color: "#74b9ff",
+    "&:hover": {
+      color: "#0984e3",
+      cursor: "pointer",
+      textDecoration: "underline"
+    }
   },
   day: {
-    padding: "10px 0px"
+    color: "grey",
+    fontSize: "1rem"
   },
   body: {}
 });
 
 class Post extends Component {
   render() {
-    const { classes } = this.props;
+    const { classes, title, body, tags, publishedDate } = this.props;
+
+    //tags=[태그1,태그2,태그3]
 
     return (
       <Grid container spacing={40} className={classes.mainGrid}>
         <Grid item xs={12} md={12}>
+          <div className={classes.appBarSpacer} />
           <div className={classes.postInfo}>
-            <h1 className={classes.title}>제목</h1>
+            <h1 className={classes.title}>{title}</h1>
             <Divider />
-            <div className={classes.tags}>태그</div>
-            <Typography
-              className={classes.day}
-              variant="subtitle1"
-              color="textSecondary"
-            >
-              날짜
-            </Typography>
+            <div className={classes.subText}>
+              <div className={classes.tags}>
+                {tags &&
+                  tags.map(tag => (
+                    <Link key={tag} to={`/tags/${tag}`} className={classes.tags}>
+                      #{tag}
+                    </Link>
+                  ))}
+              </div>
+              <div className={classes.day}>
+                {moment(publishedDate).format("ll")}
+              </div>
+            </div>
           </div>
-          <div className={classes.body}>바디</div>
+          <div className={classes.body}>
+            <MarkdownRender markdown={body} />
+          </div>
         </Grid>
       </Grid>
     );

@@ -23,7 +23,8 @@ const styles = theme => ({
   },
   toolBar: {
     display: "flex",
-    alignItems: "center"
+    alignItems: "center",
+    justifyContent: "space-between"
   },
   menuButton: {
     marginRight: 20
@@ -31,6 +32,7 @@ const styles = theme => ({
   menuIcon: {
     color: "#4a4a4a"
   },
+  buttonGroup: {},
   submit: {
     marginLeft: "auto"
   }
@@ -38,12 +40,7 @@ const styles = theme => ({
 
 class EditorHeader extends React.Component {
   render() {
-    const { 
-      onGoBack, 
-      onSubmit, 
-      isEdit, 
-      classes, 
-      drawerToggle } = this.props;
+    const { onGoBack, onSubmit, isEdit, classes, drawerToggle } = this.props;
 
     return (
       <AppBar position="fixed" className={classes.appBar}>
@@ -56,18 +53,18 @@ class EditorHeader extends React.Component {
           >
             <MenuIcon className={classes.menuIcon} />
           </IconButton>
-          <Button className={classes.back} onClick={onGoBack} theme="outline">
-            뒤로가기
-          </Button>
-          <Typography variant="h6" color="inherit" noWrap>
-            {/* David Home */}
-          </Typography>
-          <Button 
-            className={classes.submit} 
-            onClick={onSubmit} 
-            theme="outline">
-            {isEdit ? '수정' : '작성'}하기
-          </Button>
+          <div className={classes.buttonGroup}>
+            <Button className={classes.back} onClick={onGoBack} theme="outline">
+              뒤로가기
+            </Button>
+            <Button
+              className={classes.submit}
+              onClick={onSubmit}
+              theme="outline"
+            >
+              {isEdit ? "수정" : "작성"}하기
+            </Button>
+          </div>
         </Toolbar>
       </AppBar>
     );

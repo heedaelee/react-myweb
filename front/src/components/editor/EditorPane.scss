@@ -26,6 +26,7 @@
     :global .CodeMirror {
       font-size: 1rem;
       flex: 1;
+      height:70vh;
     }
   }
 
@@ -35,6 +36,7 @@
     height:2rem;
     background:$oc-gray-7;
     align-items:center;
+    display: inherit;
 
     .description {
       font-size: 0.85rem;

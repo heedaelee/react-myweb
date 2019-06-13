@@ -1,7 +1,7 @@
 .editor-template {
   flex: 1;
   .panes {
-    height: calc(100vh - 4rem);
+    height: 100vh;
     display: flex;
     position: relative;
 
@@ -10,6 +10,7 @@
       min-width: 0;
       overflow: auto;
       margin-top: 64px;
+      
     }
 
     .divide {

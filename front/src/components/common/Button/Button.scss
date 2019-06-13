@@ -7,7 +7,7 @@
   padding-bottom: 0.25rem;
   font-weight: 600;
   font-size: 0.9rem;
-  color: white;
+  color: #9E9E9E;
   cursor: pointer;
   user-select: none; // 드래그 방지
   display: inline-flex;
@@ -40,7 +40,7 @@
     border-radius: 2px;
     &:hover {
       background: white;
-      color: $oc-blue-6;
+      color: black;
     }
     &:active {
       background: rgba(255,255,255,0.85);

@@ -18,7 +18,8 @@ const styles = theme => ({
     [theme.breakpoints.up("sm")]: {
       width: `100%`
     },
-    backgroundColor: theme.palette.background.paper
+    backgroundColor: theme.palette.background.paper,
+    color:'black'
   },
   menuButton: {
     marginRight: 20,
@@ -28,6 +29,9 @@ const styles = theme => ({
   },
   menuIcon: {
     color: "#4a4a4a"
+  },
+  toolbar:{
+    color:'black',
   }
 });
 
@@ -37,7 +41,7 @@ class Header extends React.Component {
 
     return (
       <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar>
+        <Toolbar className={classes.toolbar}>
           <IconButton
             color="inherit"
             aria-label="Open drawer"
@@ -47,7 +51,7 @@ class Header extends React.Component {
             <MenuIcon className={classes.menuIcon} />
           </IconButton>
           <Typography variant="h6" color="inherit" noWrap>
-            {/* David Home */}
+            David Blog
           </Typography>
         </Toolbar>
       </AppBar>
