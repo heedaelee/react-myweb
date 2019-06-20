@@ -8,6 +8,7 @@
   font-weight: 600;
   font-size: 0.9rem;
   color: #9E9E9E;
+  text-decoration: none;
   cursor: pointer;
   user-select: none; // 드래그 방지
   display: inline-flex;
@@ -15,6 +16,7 @@
   // default: 파란색 버튼
   &.default {
     background: $oc-blue-6;
+    color:white;
     &:hover {
       background: $oc-blue-5;
     }
@@ -26,6 +28,7 @@
   // gray: 회색 버튼
   &.gray {
     background: $oc-gray-7;
+    color:white;
     &:hover {
       background: $oc-gray-6;
     }

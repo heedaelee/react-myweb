@@ -23,7 +23,7 @@ export const getPost = createAction(GET_POST, api.getPost);
 const initialState= Map({
   title:'',
   markdown:'',
-  tags:[],
+  tags:'',
   postId:null,
 });
 
@@ -45,8 +45,10 @@ export default handleActions ({
   ...pender({
     type:GET_POST,
     onSuccess:(state, action) => {
-      const {post} = action.payload.data;
-      return state.set('post', post);
+      const {title, tags, body} = action.payload.data;
+      return state.set('title', title)
+                  .set('markdown', body)
+                  .set('tags', tags.join(','))//[태그1, 태그2..] -> '태그1,태그2,태그3..'
     }
   })
 

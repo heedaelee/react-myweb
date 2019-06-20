@@ -41,7 +41,7 @@ class EditorHeaderContainer extends Component {
       title,
       body: markdown,
       tags:
-        tags === "" ? [] : [...new Set(tags.split(",").map(tag => tag.trim()))]
+        tags === "" ? [] : [...new Set(tags.split(',').map(tag => tag.trim()))]
     }; //태그 텍스트를 ,로 분리 
     // ex) 문자열 :'태그1,태그2,태그3' ->배열: [태그1,태그2,태그3]으로 쪼개는 과정 
 

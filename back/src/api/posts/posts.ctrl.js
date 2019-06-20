@@ -3,6 +3,26 @@ import Joi from "joi";
 
 import { Types } from "mongoose";
 
+exports.checkObjectId = (ctx, next) => {
+  const {id} = ctx.params;
+  const {ObjectId} = Types;
+  
+  //검증실패
+  if(!ObjectId.isValid(id)) {
+    ctx.status = 400; // 400 Bad Request
+    return null;
+  }
+  return next();// next를 리턴해주어야 ctx.body가 제대로 설정됩니다.
+};
+
+exports.checkLogin = (ctx, next) => {
+  if(!ctx.session.logged){
+    ctx.status = 401; //Unauthorized
+    return null;
+  }
+  return next();
+}
+
 /* 
   POST /api/posts
   {title, body, tags}

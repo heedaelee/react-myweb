@@ -10,5 +10,8 @@
     "server": "cd back && yarn start",
     "client": "cd front && yarn start",
     "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\""
+  },
+  "dependencies": {
+    "cross-env": "^5.2.0"
   }
 }

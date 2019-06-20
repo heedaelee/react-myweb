@@ -10,7 +10,7 @@ const cx = classNames.bind(styles);
 const Div = ({children, ...rest}) => <div {...rest}>{children}</div>
 
 const Button = ({
-  children, to, onClick, disabled, theme = 'default',
+  children, to, onClick, disabled, theme = 'outline',
 }) => {
   // to 값이 존재하면 Link를 사용하고, 그렇지 않으면 div를 사용합니다.
   // 비활성화되어 있는 버튼일 때도 div를 사용합니다.

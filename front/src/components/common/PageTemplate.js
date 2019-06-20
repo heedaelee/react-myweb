@@ -5,9 +5,8 @@ import Hidden from "@material-ui/core/Hidden";
 
 import { withStyles } from "@material-ui/core/styles";
 import CssBaseLine from "@material-ui/core/CssBaseline";
-
 import { menuList } from "./menuList";
-import { Header } from "components/common";
+import  HeaderContainer  from "containers/common/HeaderContainer";
 import {drawerWidth, RsideWidth} from "components/common/commonCss";
 
 const styles = theme => ({
@@ -66,7 +65,7 @@ class PageTemplate extends React.Component {
     return (
       <div className={classes.root}>
         <CssBaseLine />
-        <Header 
+        <HeaderContainer
           drawerToggle={this.handleDrawerToggle} 
         />
         <nav className={classes.drawer}>

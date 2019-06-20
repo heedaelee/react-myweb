@@ -1,0 +1,21 @@
+@import "../../../styles/utils.scss";
+
+.question {
+  background: white;
+  padding: 2rem;
+  .title {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color:#576574;
+  }
+  .description {
+    margin-top: 0.25rem;
+    color:#576574;
+  }
+}
+.option {
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
