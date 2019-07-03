@@ -7,14 +7,16 @@
     "browser-env": "^3.2.6",
     "dotenv": "^8.0.0",
     "joi": "^14.3.1",
+    "jsonwebtoken": "^8.5.1",
     "koa": "^2.7.0",
     "koa-bodyparser": "^4.2.1",
+    "koa-morgan": "^1.0.1",
     "koa-router": "^7.4.0",
     "koa-session": "^5.12.0",
     "mongoose": "^5.5.12"
   },
   "scripts": {
-    "start": "cross-env NODE_PATH=src nodemon --exec babel-node src/index.js"
+    "start": "cross-env NODE_PATH=src nodemon --exec babel-node src/index.js --config nodemon.json"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

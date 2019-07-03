@@ -1,0 +1,5 @@
+{
+  "env":{
+    "JWT_SECRET": "mobxblog1#1#123$"
+  }
+}

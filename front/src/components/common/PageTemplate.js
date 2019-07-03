@@ -40,7 +40,7 @@ const styles = theme => ({
     overflow: "auto",
     borderRight: '1px solid rgba(0, 0, 0, 0.12)',
     background: 'white',
-    
+    zIndex: '1200',
   }
 });
 
