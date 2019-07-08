@@ -1,39 +1,44 @@
-import React, {Component} from 'react';
-import Header from 'components/common/Header';
-import {withRouter} from 'react-router-dom';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as baseActions from 'store/modules/base';
+import React, { Component } from "react";
+import Header from "components/common/Header";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import * as userActions from "store/modules/user";
+import storage from "lib/storage";
 
 class HeaderContainer extends Component {
-handleLoginClick = async () => {
-  const { BaseActions, logged} = this.props;
-  if(logged){
-    try{
-      await BaseActions.logout();
-      window.location.reload();//페이지 새로고침
-    }catch(e) {
-      console.log(e);
+  handleLoginClick = async () => {
+    const { UserActions, user } = this.props;
+    const { logged, loggedInfo } = user;
+    const { thumbnamil, username } = loggedInfo;
+
+    console.log(logged);
+    if (logged) { //로그아웃
+      try {
+        await UserActions.logout();
+        storage.remove("loggedInfo");
+        window.location.href = "/"; //홈으로
+        return;
+      } catch (e) {
+        console.log(e);
+      }
     }
-    return;
-  }
-  BaseActions.showModal('login');
-  BaseActions.initializeLoginModal();
-}
+    window.location.href = "/auth/login";
+  };
   handleRemove = () => {
     const { BaseActions } = this.props;
-    BaseActions.showModal('remove');
-  }
+    BaseActions.showModal("remove");
+  };
 
-  render(){
+  render() {
     const { handleRemove, handleLoginClick } = this;
-    const {match, logged} = this.props; //나중에 logged 가져와야 함
-    const { id }= match.params;
+    const { match, user } = this.props;
+    const { id } = match.params;
 
-    return(
-      <Header 
+    return (
+      <Header
         postId={id}
-        logged={logged} 
+        user={user}
         onRemove={handleRemove}
         onLoginClick={handleLoginClick}
       />
@@ -42,10 +47,10 @@ handleLoginClick = async () => {
 }
 
 export default connect(
-  (state) => ({
-    logged: state.base.get('logged')
+  state => ({
+    user: state.user
   }),
-  (dispatch) => ({
-    BaseActions: bindActionCreators(baseActions, dispatch)
+  dispatch => ({
+    UserActions: bindActionCreators(userActions, dispatch)
   })
-)(withRouter(HeaderContainer))
+)(withRouter(HeaderContainer));

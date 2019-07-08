@@ -2,7 +2,7 @@ import {createAction, handleActions} from 'redux-actions';
 import {Map} from 'immutable';
 import {pender} from 'redux-pender';
 
-import * as api from "lib/api";
+import * as postApi from "lib/api/post";
 
 //action types
 const INITIALIZE = 'editor/INITIALIZE';
@@ -15,9 +15,9 @@ const GET_POST = 'editor/GET_POST';
 export const initialize = createAction(INITIALIZE);
 export const changeInput = createAction(CHANGE_INPUT);
 
-export const writePost = createAction(WIRTE_POST, api.writePost);
-export const editPost = createAction(EDIT_POST, api.editPost);
-export const getPost = createAction(GET_POST, api.getPost);
+export const writePost = createAction(WIRTE_POST, postApi.writePost);
+export const editPost = createAction(EDIT_POST, postApi.editPost);
+export const getPost = createAction(GET_POST, postApi.getPost);
 
 // initial state
 const initialState= Map({

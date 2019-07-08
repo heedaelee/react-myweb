@@ -3,7 +3,7 @@ import { createAction, handleActions } from "redux-actions";
 import { Map, List, fromJS } from "immutable";
 import { pender } from "redux-pender";
 
-import * as api from "lib/api";
+import * as postApi from "lib/api/post";
 
 //action types
 const GET_POST_LIST = "list/GET_POST_LIST";
@@ -11,7 +11,7 @@ const GET_POST_LIST = "list/GET_POST_LIST";
 //action creators
 export const getPostList = createAction(
   GET_POST_LIST,
-  api.getPostList,
+  postApi.getPostList,
   meta => meta
 );
 

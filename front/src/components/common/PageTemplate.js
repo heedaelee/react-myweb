@@ -6,41 +6,41 @@ import Hidden from "@material-ui/core/Hidden";
 import { withStyles } from "@material-ui/core/styles";
 import CssBaseLine from "@material-ui/core/CssBaseline";
 import { menuList } from "./menuList";
-import  HeaderContainer  from "containers/common/HeaderContainer";
-import {drawerWidth, RsideWidth} from "components/common/commonCss";
+import HeaderContainer from "containers/common/HeaderContainer";
+import { drawerWidth, RsideWidth } from "components/common/commonCss";
 
 const styles = theme => ({
   root: {
-    display: "flex",
+    display: "flex"
   },
   drawer: {
     [theme.breakpoints.up("sm")]: {
       width: drawerWidth,
       flexShrink: 0
-    },
+    }
   },
   rSidebar: {
     [theme.breakpoints.up("md")]: {
       width: RsideWidth,
-      flexShrink: 0,
-    },
+      flexShrink: 0
+    }
   },
   toolbar: theme.mixins.toolbar,
   drawerPaper: {
-    width: drawerWidth,
+    width: drawerWidth
   },
   appBarSpacer: theme.mixins.toolbar,
   content: {
     [theme.breakpoints.down("sm")]: {
-      padding: theme.spacing.unit * 1,
+      padding: theme.spacing.unit * 1
     },
     flexGrow: 1,
     padding: theme.spacing.unit * 5,
     height: "100vh",
     overflow: "auto",
-    borderRight: '1px solid rgba(0, 0, 0, 0.12)',
-    background: 'white',
-    zIndex: '1200',
+    borderRight: "1px solid rgba(0, 0, 0, 0.12)",
+    background: "white",
+    zIndex: "1200"
   }
 });
 
@@ -65,11 +65,8 @@ class PageTemplate extends React.Component {
     return (
       <div className={classes.root}>
         <CssBaseLine />
-        <HeaderContainer
-          drawerToggle={this.handleDrawerToggle} 
-        />
+        <HeaderContainer drawerToggle={this.handleDrawerToggle} />
         <nav className={classes.drawer}>
-          {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
           <Hidden smUp implementation="css">
             <Drawer
               container={this.props.container}
@@ -78,7 +75,7 @@ class PageTemplate extends React.Component {
               open={this.state.mobileOpen}
               onClose={this.handleDrawerToggle}
               classes={{
-                paper: classes.drawerPaper,
+                paper: classes.drawerPaper
               }}
             >
               {drawer}
@@ -100,8 +97,8 @@ class PageTemplate extends React.Component {
           <div className={classes.appBarSpacer} />
           {this.props.children}
         </main>
-        <Hidden xsDown >
-          <div className={classes.rSidebar} style={{background:'white'}}  />
+        <Hidden xsDown>
+          <div className={classes.rSidebar} style={{ background: "white" }} />
         </Hidden>
       </div>
     );

@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 
 /* 
-JWT 토큰 만들기
+JWT 토큰 만들기(서버에서 토큰 sign)
 @param {any} payload
 @returns {string} token
  */
@@ -24,6 +24,7 @@ function generateToken(payload) {
   });
 }
 
+//토큰 검증 return: boolean
 function decodeToken(token) {
   return new Promise((resolve, reject) => {
     jwt.verify(token, process.env.JWT_SECRET, (error, decoded) => {

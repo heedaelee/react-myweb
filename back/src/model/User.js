@@ -30,7 +30,7 @@ const User = new Schema({
       id: String,
       accessToken: String
     },
-    google: {
+    naver: {
       id: String,
       accessToken: String
     }

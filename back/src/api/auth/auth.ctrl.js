@@ -99,8 +99,8 @@ exports.localLogin = async ctx => {
     return;
   }
 
-  //로그인 검증 완료함!! 이후 로직은 => 
-  // TODO: 1.토큰 발행 2.쿠키에 set 3.ctx.body <= 유저 profile 
+  //로그인 검증 완료함!! 이후 로직은 =>
+  // TODO: 1.토큰 발행 2.쿠키에 set 3.ctx.body <= 유저 profile
   let token = null;
   try {
     token = await user.generateToken();
@@ -113,25 +113,8 @@ exports.localLogin = async ctx => {
     maxAge: 1000 * 60 * 60 * 24 * 7
   });
   ctx.body = user.profile; //프로필 정보로 응답합니다.
-  console.log(user.profile);
-  
+  console.log('back login api',user.profile);
 };
-/* exports.login = (ctx) => {
-  const { password } = ctx.request.body;
-
-  if(adminPass === password){
-    ctx.body={
-      success: true
-    };
-    //로그인에 성공하면 logged 값을 true로
-    ctx.session.logged=true;
-  }else {
-    ctx.body = {
-      success:false
-    };
-    ctx.status = 401; //Unauthorized
-  }
-}; */
 
 //이메일 / 아이디 체크
 exports.exists = async ctx => {
@@ -149,27 +132,21 @@ exports.exists = async ctx => {
   }
 
   ctx.body = {
-    exists: user !== null
+    exists: user !== null //  =>  3 !== 3;  false 반환
   };
 };
-/* exports.check = (ctx) => {
-  ctx.body = {
-    // ! 문자를 두 번 입력하여
-    // 값이 존재하지 않을 때도 false를 반환하도록 설정합니다
-    logged: !!ctx.session.logged
-  };
-}; */
+
 
 // 현재 로그인 check API (쿠키에 access_token 여부에 따라)
 exports.check = ctx => {
-  const { user } = ctx.request;
+  const { user } = ctx.request; //로그인 될시 user가 들어감
   console.log("user", user);
   if (!user) {
     ctx.status = 403; //Forbidden
     return;
   }
 
-  ctx.body = user.profile;
+  ctx.body = user.profile; //{username: , thumbnail: }
 };
 
 //로그아웃

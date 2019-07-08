@@ -40,8 +40,10 @@ const styles = theme => ({
 
 class Header extends React.Component {
   render() {
-    const { classes, drawerToggle, postId, onRemove, logged, onLoginClick } = this.props;
-
+    const { classes, drawerToggle, postId, onRemove, user, onLoginClick } = this.props;
+    const {logged} = user
+    console.log('header login check',logged);
+    
     return (
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
@@ -79,8 +81,8 @@ class Header extends React.Component {
                 </Button>
               </>
             )}
-            <Button onClick={onLoginClick}>
-              {logged ? '로그아웃' : '관리자로그인'}
+            <Button  onClick={onLoginClick}>
+              {logged ? '로그아웃' : '로그인/가입'}
             </Button>
           </div>
         </Toolbar>
