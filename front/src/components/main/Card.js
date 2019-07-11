@@ -25,7 +25,7 @@ const PostList = (props) => {
 
   return (
     <Grid container  spacing={40} className={classes.cardGrid}>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={12}>
           <Card className={classes.card}>
             <div className={classes.cardDetails}>
               <CardContent>
@@ -36,17 +36,6 @@ const PostList = (props) => {
             </div>
           </Card>
         </Grid>
-        <Grid item xs={12} md={6}>
-        <Card className={classes.card}>
-          <div className={classes.cardDetails}>
-            <CardContent>
-              <Typography variant="subtitle1" color="primary">
-                최근 댓글
-              </Typography>
-            </CardContent>
-          </div>
-        </Card>
-      </Grid>
     </Grid>
   );
 };

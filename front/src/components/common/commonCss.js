@@ -1,2 +1,2 @@
 export const drawerWidth = 240;
-export const RsideWidth = 100;
+/* export const RsideWidth = 100; */

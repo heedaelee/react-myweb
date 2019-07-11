@@ -11,10 +11,10 @@ class EditorHeaderContainer extends Component {
   componentDidMount() {
     const { EditorActions, location } = this.props;
     //초기화
-    EditorActions.initialize();//store/modules/editor.js에서 Map({})객체를 state.set해서 초기화
-    const {id} = queryString.parse(location.search);
+    EditorActions.initialize(); //store/modules/editor.js에서 Map({})객체를 state.set해서 초기화
+    const { id } = queryString.parse(location.search);
     console.log(id);
-    
+
     //id가 존재하는 경우 getPost
     if (id) {
       EditorActions.getPost(id);
@@ -34,26 +34,31 @@ class EditorHeaderContainer extends Component {
       tags,
       EditorActions,
       history,
-      location
+      location,
+      loggedInfo
     } = this.props;
 
+    const { username } = loggedInfo;
+
     const post = {
+      username,
       title,
       body: markdown,
       tags:
-        tags === "" ? [] : [...new Set(tags.split(',').map(tag => tag.trim()))]
-    }; //태그 텍스트를 ,로 분리 
-    // ex) 문자열 :'태그1,태그2,태그3' ->배열: [태그1,태그2,태그3]으로 쪼개는 과정 
+        tags === "" ? [] : [...new Set(tags.split(",").map(tag => tag.trim()))]
+    }; //태그 텍스트를 ,로 분리
+    // ex) 문자열 :'태그1,태그2,태그3' ->배열: [태그1,태그2,태그3]으로 쪼개는 과정
 
     //view -> model sending
     try {
       const { id } = queryString.parse(location.search);
       //수정작업
       if (id) {
-        await EditorActions.editPost({ id, ...post });
+        await EditorActions.editPost({ id, username, ...post });
         history.push(`/post/${id}`);
         return;
       }
+      console.log('post에 username', post.username)
       await EditorActions.writePost(post);
       //async 함수는 동기화 시킬때 await 써줘야 함!!
       //postId는 상단에 레퍼런스 두지말고,
@@ -66,7 +71,7 @@ class EditorHeaderContainer extends Component {
 
   render() {
     const { handleGoBack, handleSubmit } = this;
-    const {drawerToggle} = this.props;
+    const { drawerToggle } = this.props;
     const { id } = queryString.parse(this.props.location.search);
     return (
       <EditorHeader
@@ -84,7 +89,8 @@ export default connect(
     title: state.editor.get("title"),
     markdown: state.editor.get("markdown"),
     tags: state.editor.get("tags"),
-    postId: state.editor.get("postId")
+    postId: state.editor.get("postId"),
+    loggedInfo: state.user.loggedInfo
   }),
   dispatch => ({
     EditorActions: bindActionCreators(editorActions, dispatch)

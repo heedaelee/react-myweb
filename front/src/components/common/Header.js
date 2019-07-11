@@ -6,7 +6,8 @@ import MenuIcon from "@material-ui/icons/Menu";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import AppBar from "@material-ui/core/AppBar";
-//Material Styles
+import Hidden from "@material-ui/core/Hidden";
+
 import { withStyles } from "@material-ui/core/styles";
 import Link from "@material-ui/core/Link";
 import Button from "components/common/Button";
@@ -22,13 +23,15 @@ const styles = theme => ({
     },
     backgroundColor: theme.palette.background.paper,
     color: "black",
-    zIndex: "1201"
+    zIndex: "1201",
+    boxShadow: "none",
+    borderBottom: "1px solid rgba(0, 0, 0, 0.12)"
   },
   menuButton: {
-    marginRight: 20,
-    [theme.breakpoints.up("sm")]: {
+    marginRight: 20
+    /* [theme.breakpoints.up("sm")]: {
       display: "none"
-    }
+    } */
   },
   menuIcon: {
     color: "#4a4a4a"
@@ -40,21 +43,33 @@ const styles = theme => ({
 
 class Header extends React.Component {
   render() {
-    const { classes, drawerToggle, postId, onRemove, user, onLoginClick } = this.props;
-    const {logged} = user
-    console.log('header login check',logged);
-    
+    const {
+      classes,
+      drawerToggle,
+      postId,
+      onRemove,
+      user,
+      post,
+      onLoginClick
+    } = this.props;
+    const { logged, loggedInfo } = user;
+    const { username, thumbnail } = loggedInfo;
+    console.log("로그드 유저네임", username);
+    console.log("게시물 유저네임", post.username);
+
     return (
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="Open drawer"
-            onClick={drawerToggle}
-            className={classes.menuButton}
-          >
-            <MenuIcon className={classes.menuIcon} />
-          </IconButton>
+          <Hidden mdUp implementation="css">
+            <IconButton
+              color="inherit"
+              aria-label="Open drawer"
+              onClick={drawerToggle}
+              className={classes.menuButton}
+            >
+              <MenuIcon className={classes.menuIcon} />
+            </IconButton>
+          </Hidden>
           <Typography href="/" variant="h6" color="inherit">
             <Link color="inherit" href="/">
               David Blog
@@ -63,7 +78,7 @@ class Header extends React.Component {
           <div className={classes.buttonGroup}>
             {logged && (
               <>
-                {postId && [
+                {post.username === username && [
                   //flex 유지를 위해 배열로
                   <Button
                     key="edit"
@@ -81,8 +96,8 @@ class Header extends React.Component {
                 </Button>
               </>
             )}
-            <Button  onClick={onLoginClick}>
-              {logged ? '로그아웃' : '로그인/가입'}
+            <Button onClick={onLoginClick}>
+              {logged ? "로그아웃" : "로그인/가입"}
             </Button>
           </div>
         </Toolbar>

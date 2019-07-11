@@ -14,6 +14,7 @@ class AskRemoveModalContainer extends Component {
   handleConfirm = async () => {
     const { match, PostActions,BaseActions,history } = this.props;
     const { id } = match.params;
+    console.log('handleConfirm', id)
 
     try {
       await PostActions.deletePost(id);

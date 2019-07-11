@@ -113,7 +113,6 @@ exports.localLogin = async ctx => {
     maxAge: 1000 * 60 * 60 * 24 * 7
   });
   ctx.body = user.profile; //프로필 정보로 응답합니다.
-  console.log('back login api',user.profile);
 };
 
 //이메일 / 아이디 체크
@@ -140,7 +139,6 @@ exports.exists = async ctx => {
 // 현재 로그인 check API (쿠키에 access_token 여부에 따라)
 exports.check = ctx => {
   const { user } = ctx.request; //로그인 될시 user가 들어감
-  console.log("user", user);
   if (!user) {
     ctx.status = 403; //Forbidden
     return;

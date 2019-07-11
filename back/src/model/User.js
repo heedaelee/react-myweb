@@ -21,7 +21,7 @@ function hash(password) {
 const User = new Schema({
   profile: {
     username: String,
-    thumbnail: { type: String, default: "/static/images/default_thumbnail.png" }
+    thumbnail: String,   //{ type: String, default: "/static/images/default_thumbnail.png" }
   },
   email: { type: String },
   //소셜 계정으로 회원가입을 할 경우엔 각 서비스에서 제공되는 id와 accessToken을 저장합니다.
@@ -40,7 +40,8 @@ const User = new Schema({
   createdAt: {
     type: Date,
     default: Date.now
-  }
+  },
+  isCertificated: String
 });
 
 //이름으로 유저 찾기

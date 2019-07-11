@@ -1,0 +1,51 @@
+@import "../../styles/utils.scss";
+.wrapper {
+  padding: 0px 80px;
+  .header {
+    .title {
+      margin-top: 0px;
+      padding-bottom: 20px;
+      font-size: 34px;
+      text-align: center;
+      letter-spacing: -0.5px;
+      line-height: 1.2;
+      color: #000;
+    }
+  }
+
+  .contents {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .thumbnail {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .img {
+        width: 80px;
+      }
+      .username {
+        padding-top: 1rem;
+        text-align: center;
+      }
+    }
+    .infor {
+      .table{
+        margin-top: 2.5rem;
+        width: 80vh;
+        tr {
+          height: 40px;
+        }
+        th {
+          text-align: left;
+        }
+        td {
+          text-align: left
+        }
+      }
+    }
+  }
+  .leave {
+    margin-top: 2rem;
+  }
+}

@@ -35,7 +35,6 @@ export default handleActions(
       const { payload: modalName } = action;
       return state.setIn(["modal", modalName], false);
     },
-    
   },
   initialState
 );

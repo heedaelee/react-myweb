@@ -73,7 +73,7 @@ const PostItem = ({ id, title, body, tags, publishedDate, classes }) => {
 
   return (
     <Grid item key={id} xs={12} md={12}>
-      <CardActionArea href={`/post/${id}`}>
+      <CardActionArea  href={`/post/${id}`}>
         <Card className={classes.card}>
           <CardMedia
             className={classes.cardMedia}

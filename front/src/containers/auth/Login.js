@@ -4,7 +4,8 @@ import {
   InputWithLabel,
   AuthButton,
   RightAlignedLink,
-  AuthError
+  AuthError,
+  SocialLoginButton
 } from "components/auth";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -98,6 +99,7 @@ class Login extends Component {
         }
         <AuthButton  onClick={handleLocalLogin}>로그인</AuthButton>
         <RightAlignedLink to="/auth/register">회원가입</RightAlignedLink>
+        <SocialLoginButton />{/* TODO naver, kakao handleLocal 연결해야함 */}
       </AuthContent>
     );
   }

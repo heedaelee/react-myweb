@@ -4,24 +4,25 @@ import Joi from "joi";
 import { Types } from "mongoose";
 
 exports.checkObjectId = (ctx, next) => {
-  const {id} = ctx.params;
-  const {ObjectId} = Types;
-  
+  const { id } = ctx.params;
+  const { ObjectId } = Types;
+
   //검증실패
-  if(!ObjectId.isValid(id)) {
+  if (!ObjectId.isValid(id)) {
     ctx.status = 400; // 400 Bad Request
     return null;
   }
-  return next();// next를 리턴해주어야 ctx.body가 제대로 설정됩니다.
+  return next(); // next를 리턴해주어야 ctx.body가 제대로 설정됩니다.
 };
 
 exports.checkLogin = (ctx, next) => {
-  if(!ctx.session.logged){
+  if (!ctx.request.header.cookie) {
     ctx.status = 401; //Unauthorized
     return null;
   }
+  console.log("exports.checkLogin 토큰 확인");
   return next();
-}
+};
 
 /* 
   POST /api/posts
@@ -33,7 +34,8 @@ exports.write = async ctx => {
     body: Joi.string().required(),
     tags: Joi.array()
       .items(Joi.string())
-      .required()
+      .required(),
+    username: Joi.string().required()
   });
 
   const result = Joi.validate(ctx.request.body, schema);
@@ -44,9 +46,11 @@ exports.write = async ctx => {
     return;
   }
 
-  const { title, body, tags } = ctx.request.body;
+  const { title, body, tags, username } = ctx.request.body;
+  console.log("in post.ctrl exports.write=> username=", username);
 
   const post = new Post({
+    username,
     title,
     body,
     tags
@@ -108,7 +112,7 @@ exports.list = async ctx => {
 
 exports.update = async ctx => {
   const { id } = ctx.params;
-
+  console.log('PATCH /api/posts/:id',id)
   try {
     const post = await Post.findByIdAndUpdate(id, ctx.request.body, {
       new: true //이값을 설정해줘야, 업뎃후 값 반환
@@ -126,7 +130,7 @@ exports.update = async ctx => {
 /*
   GET /api/posts/:id
 */
-exports.read = async (ctx) => {
+exports.read = async ctx => {
   const { id } = ctx.params;
   try {
     const post = await Post.findById(id).exec();
@@ -147,11 +151,12 @@ exports.read = async (ctx) => {
 
 exports.remove = async ctx => {
   const { id } = ctx.params;
+  console.log('DELETE /api/posts/:id',ctx)
 
-  try{
+  try {
     await Post.findByIdAndRemove(id).exec();
     ctx.status = 204;
-  }catch(e) {
+  } catch (e) {
     ctx.throw(e, 500);
   }
 };

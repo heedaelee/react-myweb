@@ -7,21 +7,17 @@ import { withStyles } from "@material-ui/core/styles";
 import CssBaseLine from "@material-ui/core/CssBaseline";
 import { menuList } from "./menuList";
 import HeaderContainer from "containers/common/HeaderContainer";
-import { drawerWidth, RsideWidth } from "components/common/commonCss";
+import { drawerWidth } from "components/common/commonCss";
+import 'styles/utils.scss'
 
 const styles = theme => ({
   root: {
-    display: "flex"
+    display: "flex",
+    fontFamily: 'NanumBarunGothic, sans-serif',
   },
   drawer: {
-    [theme.breakpoints.up("sm")]: {
-      width: drawerWidth,
-      flexShrink: 0
-    }
-  },
-  rSidebar: {
     [theme.breakpoints.up("md")]: {
-      width: RsideWidth,
+      width: drawerWidth,
       flexShrink: 0
     }
   },
@@ -67,39 +63,30 @@ class PageTemplate extends React.Component {
         <CssBaseLine />
         <HeaderContainer drawerToggle={this.handleDrawerToggle} />
         <nav className={classes.drawer}>
-          <Hidden smUp implementation="css">
+          <Hidden mdUp implementation="css">
+            {/* side바 mdUp일때 temporary 켜짐 */}
             <Drawer
               container={this.props.container}
               variant="temporary"
               anchor={theme.direction === "rtl" ? "right" : "left"}
               open={this.state.mobileOpen}
               onClose={this.handleDrawerToggle}
-              classes={{
-                paper: classes.drawerPaper
-              }}
+              classes={{paper: classes.drawerPaper}}
             >
               {drawer}
             </Drawer>
           </Hidden>
-          <Hidden xsDown implementation="css">
-            <Drawer
-              classes={{
-                paper: classes.drawerPaper
-              }}
-              variant="permanent"
-              open
-            >
-              {drawer}
-            </Drawer>
-          </Hidden>
+          <Drawer
+            classes={{paper: classes.drawerPaper}}
+            variant="permanent"
+          >
+            {drawer}
+          </Drawer>
         </nav>
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
           {this.props.children}
         </main>
-        <Hidden xsDown>
-          <div className={classes.rSidebar} style={{ background: "white" }} />
-        </Hidden>
       </div>
     );
   }
@@ -107,8 +94,6 @@ class PageTemplate extends React.Component {
 
 PageTemplate.propTypes = {
   classes: PropTypes.object.isRequired,
-  // Injected by the documentation to work in an iframe.
-  // You won't need it on your project.
   container: PropTypes.object,
   theme: PropTypes.object.isRequired
 };

@@ -1,0 +1,33 @@
+import React, { Component } from 'react';
+import LoginModalContainer from 'containers/modal/LoginModalContainer';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as baseActions from 'store/modules/base';
+
+class Base extends Component {
+  initialize = ()=> {
+    /* const { BaseActions } = this.props;
+    if(localStorage.logged === "true") {
+      BaseActions.tempLogin();
+    }
+    BaseActions.checkLogin(); */
+  }
+
+  componentDidMount(){
+    this.initialize();
+  }
+  render(){
+    return(
+      <div>
+      {/* /* 전역적으로 사용하는 컴포넌트는 여기서 랜더링 */}
+      </div>
+    )
+  }
+}
+
+export default connect (
+null,
+(dispatch) => ({
+  BaseActions : bindActionCreators(baseActions, dispatch)
+})
+)(Base);

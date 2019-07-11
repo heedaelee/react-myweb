@@ -5,9 +5,9 @@ import queryString from "query-string";
 export const getPost = id => axios.get(`/api/posts/${id}`);
 export const getPostList = ({ tag, page }) =>
   axios.get(`/api/posts/?${queryString.stringify({ tag, page })}`);
-export const writePost = ({ title, body, tags }) =>
-  axios.post(`/api/posts`, { title, body, tags });
-export const editPost = ({ id, title, body, tags }) =>
-  axios.patch(`/api/posts/${id}`, { title, body, tags });
-export const deletePost = id => axios.delete(`/api/posts/${id}`);
-
+export const writePost = ({ title, body, tags, username }) =>
+  axios.post(`/api/posts`, { title, body, tags, username });
+export const editPost = ({ id, title, body, tags, username }) =>
+  axios.patch(`/api/posts/${id}`, { title, body, tags, username });
+export const deletePost = ({ id }) =>
+  axios.delete(`/api/posts/${id}`);

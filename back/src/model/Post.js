@@ -10,6 +10,7 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const Post = new Schema({
+  username: String,
   title: String,
   body: String,
   tags: [String], // 문자열의 배열
