@@ -34,7 +34,6 @@ class HeaderContainer extends Component {
   render() {
     const { handleRemove, handleLoginClick } = this;
     const { match, user, drawerToggle, post } = this.props;
-    console.log('헤더컨테이너',post);
     
     const { id } = match.params;
 

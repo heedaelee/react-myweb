@@ -6,22 +6,27 @@ import produce from "immer";
 
 const GET_PROFILE = 'profile/GET_PROFILE' //프로필 조회
 const INITIALIZE = 'profile/INITIALIZE'; //초기화
-const UPDATE_PROFILE = 'profile/UPDATE_PROFILE'; //프로필 업데이트
+
 const UNREGISTER = 'profile/UNREGISTER'; // 탈퇴
 const CHANGE_INPUT = 'profile/CHANGE_INPUT';
+const UPLOAD_THUMBNAIL = 'profile/UPLOAD_THUMBNAIL' //사진 업로드
+const UPDATE_PROFILE = 'profile/UPDATE_PROFILE'; //프로필 업데이트
 
 export const getProfile = createAction(GET_PROFILE, UserAPI.getProfile) // params : username
 export const initialize = createAction(INITIALIZE)
-export const updateProfile = createAction(UPDATE_PROFILE)
+
 export const unregister = createAction(UNREGISTER)
 export const changeInput = createAction(CHANGE_INPUT)
+export const uploadThumbnail = createAction(UPLOAD_THUMBNAIL,UserAPI.uploadThumbnail)// params : filename
+export const updateProfile = createAction(UPDATE_PROFILE, UserAPI.updateProfile)// params: {username, thumbnail}
 
 const initialState = {
   user:{
     profile:{},
     social:{}
   },
-  posts:{}
+  posts:{},
+  imgName:'',
 }
 
 //reducer
@@ -40,6 +45,22 @@ export default handleActions ({
         draft.user = action.payload.data
       })
     }
-  })
+  }),
+  ...pender({
+    type: UPLOAD_THUMBNAIL,
+    onSuccess: (state, action) => {
+      return produce (state, draft => {
+        draft.imgName = action.payload.data.imgName //param: {imgName: }
+      })
+    }
+  }),
+  ...pender({
+    type: UPDATE_PROFILE,
+    onSuccess: (state, action) => {
+      return produce (state, draft => {
+        draft.user = action.payload.data //params : {user: }
+      }) 
+    }
+  }),
 
 }, initialState)

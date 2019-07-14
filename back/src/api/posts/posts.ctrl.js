@@ -15,14 +15,14 @@ exports.checkObjectId = (ctx, next) => {
   return next(); // next를 리턴해주어야 ctx.body가 제대로 설정됩니다.
 };
 
-exports.checkLogin = (ctx, next) => {
+/* exports.checkLogin = (ctx, next) => {
   if (!ctx.request.header.cookie) {
     ctx.status = 401; //Unauthorized
     return null;
   }
   console.log("exports.checkLogin 토큰 확인");
   return next();
-};
+}; */
 
 /* 
   POST /api/posts

@@ -1,9 +1,10 @@
 /* require('dotenv').config(); */
 import { config } from 'dotenv';
-
 import Koa from 'koa';
 import Router from 'koa-router';
-import bodyParser from 'koa-bodyparser';
+import koaBody from 'koa-body'
+
+/* import bodyParser from 'koa-bodyparser'; */
 import morgan from 'koa-morgan';
 
 //MongoDB 모듈
@@ -37,10 +38,13 @@ mongoose.connect(mongoURI)
 
   // 라우터 적용 전에 먼저 BodyParser 미들웨어 사용
   app.use(morgan('dev'))
-  .use(bodyParser()) //라우터 적용코드보다 상단에 있어야 합니다.
+  .use(koaBody({multipart: true})) //라우터 적용코드보다 상단에 있어야 합니다.
   .use(jwtMiddleware)//토큰 체크 후, 토큰 갱신이나 유저 정보 ctx.request에 넣어줌(따라서 항상 로그인후 토큰이 있다면 유저 정보를 request에 넣어서 돌아다닐 수 있다?)
   .use(router.routes())//'/api' 라우터 적용 코드
-  .use(router.allowedMethods())
+  .use(router.allowedMethods());
+
+  
+  
 
 
 

@@ -2,12 +2,11 @@ import React from 'react'
 import { PageTemplate } from 'components/common'
 import ProfileContainer from 'containers/profile/ProfileContainer'
 
-const Profilepage = ({ match }) => {
-  const { username } = match.params
+const Profilepage = () => {
 
   return (
     <PageTemplate>
-      <ProfileContainer username={username} />
+      <ProfileContainer />
     </PageTemplate>
   )
 }

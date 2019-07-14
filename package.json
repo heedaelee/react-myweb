@@ -12,6 +12,7 @@
     "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\""
   },
   "dependencies": {
-    "cross-env": "^5.2.0"
+    "cross-env": "^5.2.0",
+    "koa-static": "^5.0.0"
   }
 }
