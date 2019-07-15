@@ -151,7 +151,7 @@ exports.read = async ctx => {
 
 exports.remove = async ctx => {
   const { id } = ctx.params;
-  console.log('DELETE /api/posts/:id',ctx)
+  console.log('DELETE /api/posts/:id',id)
 
   try {
     await Post.findByIdAndRemove(id).exec();

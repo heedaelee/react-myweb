@@ -11,8 +11,8 @@ import { bindActionCreators } from "redux";
 import * as authActions from "store/modules/auth";
 import { isEmail, isLength, isAlphanumeric } from "validator";
 import debounce from "lodash/debounce";
-import * as userActions from 'store/modules/user'
-import storage from 'lib/storage'
+import * as userActions from "store/modules/user";
+import storage from "lib/storage";
 
 class Register extends Component {
   setError = message => {
@@ -133,12 +133,12 @@ class Register extends Component {
         password
       });
       const loggedInfo = this.props.result;
-      
-      console.log('로컬에 set',loggedInfo);
+
+      console.log("로컬에 set", loggedInfo);
       // TODO : 로그인 정보 저장 (로컬스토리지/스토어)
-      storage.set('loggedInfo', loggedInfo) //1.로컬스토리지 save
-      UserActions.setLoggedInfo(loggedInfo) //2.내부 스토어 state 저장
-      UserActions.setValidated(true)
+      storage.set("loggedInfo", loggedInfo); //1.로컬스토리지 save
+      UserActions.setLoggedInfo(loggedInfo); //2.내부 스토어 state 저장
+      UserActions.setValidated(true);
 
       history.push("/"); //회원가입 성공시 홈페이지로 이동
     } catch (e) {
@@ -205,10 +205,10 @@ export default connect(
     form: state.auth.register.form,
     error: state.auth.register.error,
     exists: state.auth.register.exists,
-    result: state.auth
+    result: state.auth.result
   }),
   dispatch => ({
     AuthActions: bindActionCreators(authActions, dispatch),
-    UserActions: bindActionCreators(userActions, dispatch),
+    UserActions: bindActionCreators(userActions, dispatch)
   })
 )(Register);

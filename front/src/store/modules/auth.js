@@ -6,15 +6,11 @@ import produce from "immer";
 
 const CHANGE_INPUT = "auth/CHANGE_INPUT"; //input 값 변경
 const INITIALIZE_FORM = "auth/INITIALIZE_FORM"; // form 초기화
-
 const CHECK_EMAIL_EXISTS = "auth/CHECK_EMAIL_EXISTS"; //이메일 중복확인
 const CHECK_USERNAME_EXISTS = "auth/CHECK_USERNAME_EXISTS"; //아이디 중복 확인
-
 const LOCAL_REGISTER = "auth/LOCAL_REGISTER"; //이메일 가입
 const LOCAL_LOGIN = "auth/LOCAL_LOGIN"; //이메일 로그인
-
 const LOGOUT = "auth/LOGOUT"; //로그아웃
-
 const SET_ERROR = "auth/SET_ERROR"; //에러 메시지 설정
 
 export const changeInput = createAction(CHANGE_INPUT); // param : {form, name, value}
@@ -34,9 +30,7 @@ export const localRegister = createAction(
   AuthApi.localRegister
 ); // param : {email, username, password}
 export const localLogin = createAction(LOCAL_LOGIN, AuthApi.localLogin); // param : {username, password}
-
 export const logout = createAction(LOGOUT, AuthApi.logout); //no param
-
 export const setError = createAction(SET_ERROR); // param : {form, error}
 
 const initialState = {

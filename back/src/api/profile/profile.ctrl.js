@@ -49,3 +49,17 @@ exports.update = async ctx => {
     ctx.throw(e, 500);
   }
 };
+
+exports.remove = async ctx => {
+  const { username } = ctx.params;
+  try {
+    const query = { "profile.username": username };
+    const result = await User.findOneAndRemove(query)
+    ctx.cookies.set("access_token", "");
+    // process unregister
+    ctx.status = 204;
+    console.log(result)
+  } catch (e) {
+    ctx.status = 400;
+  }
+};

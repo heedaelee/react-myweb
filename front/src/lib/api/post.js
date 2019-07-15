@@ -9,5 +9,5 @@ export const writePost = ({ title, body, tags, username }) =>
   axios.post(`/api/posts`, { title, body, tags, username });
 export const editPost = ({ id, title, body, tags, username }) =>
   axios.patch(`/api/posts/${id}`, { title, body, tags, username });
-export const deletePost = ({ id }) =>
+export const deletePost = ( id ) =>
   axios.delete(`/api/posts/${id}`);

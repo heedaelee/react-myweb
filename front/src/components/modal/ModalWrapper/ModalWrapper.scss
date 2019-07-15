@@ -47,7 +47,7 @@
       animation: slideUp 0.25s ease-in both;
     }
     &.leave {
-      animation: slideDown 0.25s ease-in both;
+      display:none
     }
 
   }

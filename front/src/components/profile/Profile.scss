@@ -1,6 +1,7 @@
 @import "../../styles/utils.scss";
 .wrapper {
   padding: 0px 80px;
+  line-height: 18px;
   .header {
     .title {
       margin-top: 0px;
@@ -22,7 +23,8 @@
       flex-direction: column;
       align-items: center;
       .img {
-        width: 80px;
+        width: 120px;
+        height: 100px;
       }
       .username {
         padding-top: 1rem;
@@ -37,10 +39,11 @@
           height: 40px;
         }
         th {
+          color:#656565;
           text-align: left;
         }
         td {
-          text-align: left
+          text-align: left;
         }
       }
     }

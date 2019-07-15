@@ -4,6 +4,7 @@ import React, { Component } from "react";
 import Profile from "components/profile/Profile";
 import * as profileActions from "store/modules/profile";
 import * as userActions from "store/modules/user";
+import * as baseActions from "store/modules/base";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import storage from "lib/storage";
@@ -30,7 +31,7 @@ class ProfileContainer extends Component {
   } */
 
   //test
-  escapeForUrl = (text) => {
+  escapeForUrl = text => {
     return text
       .replace(
         /[^0-9a-zA-Zㄱ-힣.\u3000-\u303f\u3040-\u309f\u30a0-\u30ff\uff00-\uff9f\u4e00-\u9faf\u3400-\u4dbf -]/g,
@@ -70,7 +71,6 @@ class ProfileContainer extends Component {
       const { UserActions } = this.props;
       await UserActions.checkStatus();
       storage.set("loggedInfo", loggedInfo);
-      
     } catch (e) {
       console.log(e);
     }
@@ -93,14 +93,19 @@ class ProfileContainer extends Component {
     upload.click();
   };
 
+  //핸들링 함수 차이 알아보기
+  handleRemoveMember = () => {
+    console.log('프로필컨테이너 handleRemoveMember')
+    const { BaseActions } = this.props;
+    BaseActions.showModal("unregister");
+  }
+
   render() {
-    
     const { user, loading } = this.props;
 
     if (loading) return null;
     const { profile, social, email, password, thoughtCount } = user;
     const { username, thumbnail } = profile;
-    console.log(`★★랜더링 값 : ${thumbnail}`);
     return (
       <Profile
         email={email}
@@ -110,7 +115,9 @@ class ProfileContainer extends Component {
         thumbnail={thumbnail}
         social={social}
         onUploadThumbnail={this.onUploadThumbnail}
+        onRemove={this.handleRemoveMember}
       />
+      
     );
   }
 }
@@ -125,6 +132,7 @@ export default connect(
   }),
   dispatch => ({
     ProfileActions: bindActionCreators(profileActions, dispatch),
-    UserActions: bindActionCreators(userActions, dispatch)
+    UserActions: bindActionCreators(userActions, dispatch),
+    BaseActions: bindActionCreators(baseActions, dispatch),
   })
 )(ProfileContainer);

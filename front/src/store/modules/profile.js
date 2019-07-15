@@ -15,7 +15,7 @@ const UPDATE_PROFILE = 'profile/UPDATE_PROFILE'; //프로필 업데이트
 export const getProfile = createAction(GET_PROFILE, UserAPI.getProfile) // params : username
 export const initialize = createAction(INITIALIZE)
 
-export const unregister = createAction(UNREGISTER)
+export const unregister = createAction(UNREGISTER, UserAPI.unregister)
 export const changeInput = createAction(CHANGE_INPUT)
 export const uploadThumbnail = createAction(UPLOAD_THUMBNAIL,UserAPI.uploadThumbnail)// params : filename
 export const updateProfile = createAction(UPDATE_PROFILE, UserAPI.updateProfile)// params: {username, thumbnail}

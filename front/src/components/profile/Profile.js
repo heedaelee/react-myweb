@@ -5,8 +5,15 @@ import defaultThumbnail from "static/images/default_thumbnail.png";
 
 class Profile extends Component {
   render() {
-    
-    const { email, password, thoughtCount, username, thumbnail, onUploadThumbnail } = this.props;
+    const {
+      email,
+      password,
+      thoughtCount,
+      username,
+      thumbnail,
+      onUploadThumbnail,
+      onRemove
+    } = this.props;
 
     return (
       <div className="wrapper">
@@ -17,7 +24,11 @@ class Profile extends Component {
           <div className="thumbnail">
             <img
               className="img"
-              src={ thumbnail ? `${process.env.PUBLIC_URL}/tempfile/${thumbnail}` : defaultThumbnail}
+              src={
+                thumbnail
+                  ? `${process.env.PUBLIC_URL}/tempfile/${thumbnail}`
+                  : defaultThumbnail
+              }
               /* 
               static asset 연결하기가 어려워 /public에 업로드 파일 위치시킴
               정적자원은 위처럼 env 사용하고 주소 걸어주면 됨
@@ -25,14 +36,16 @@ class Profile extends Component {
               alt="thumbnail"
             />
             <strong className="username">{username}</strong>
-            <Button onClick={onUploadThumbnail} theme="outline">프로필 사진 변경</Button>
+            <Button onClick={onUploadThumbnail} theme="outline">
+              프로필 사진 변경
+            </Button>
           </div>
           <div className="infor">
             <table className="table">
               <tr>
                 <th>닉네임</th>
                 <td>{username}</td>
-                <td>변경하기</td>
+                <td></td>
               </tr>
               <tr>
                 <th>이메일</th>
@@ -55,7 +68,7 @@ class Profile extends Component {
               </tr>
             </table>
           </div>
-          <Button to="/탈퇴" className="leave">
+          <Button onClick={onRemove} className="leave">
             서비스 탈퇴하기
           </Button>
         </div>

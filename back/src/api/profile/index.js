@@ -6,5 +6,6 @@ const profile = new Router()
 
 profile.get("/:username", needsAuth, profileCtrl.read)
 profile.post("/:username", needsAuth, profileCtrl.update)
+profile.delete("/:username", needsAuth, profileCtrl.remove)
 
 export default profile
