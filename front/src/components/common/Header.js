@@ -99,6 +99,8 @@ class Header extends React.Component {
             <Button onClick={onLoginClick}>
               {logged ? "로그아웃" : "로그인/가입"}
             </Button>
+
+            
           </div>
         </Toolbar>
       </AppBar>
