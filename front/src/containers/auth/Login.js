@@ -71,8 +71,19 @@ class Login extends Component {
     }
   }
 
+  onSocialLogin = async e => {
+    
+    const provider = e.target.getAttribute('type')
+    
+    if(provider === 'facebook'){
+      console.log(provider) //config 에서 env.js 에서 APIhost 값을 http://localhost:4000 으로 두면 좋은데 웹팩이라 일단 스킵
+      const facebookLogin = `http://localhost:4000/api/auth/callback/facebook/login`
+      window.location.replace(facebookLogin);
+    }
+  }
+
   render() {
-    const { handleChange, handleLocalLogin, handleKeyDown } = this;
+    const { handleChange, handleLocalLogin, handleKeyDown, onSocialLogin } = this;
     const { email, password } = this.props.form;
     const { error } = this.props
 
@@ -99,7 +110,7 @@ class Login extends Component {
         }
         <AuthButton  onClick={handleLocalLogin}>로그인</AuthButton>
         <RightAlignedLink to="/auth/register">회원가입</RightAlignedLink>
-        <SocialLoginButton />{/* TODO naver, kakao handleLocal 연결해야함 */}
+        <SocialLoginButton onSocialLogin={onSocialLogin}/>{/* TODO naver, kakao handleLocal 연결해야함 */}
       </AuthContent>
     );
   }

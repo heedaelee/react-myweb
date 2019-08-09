@@ -42,7 +42,6 @@ const styles = theme => ({
     color: "grey",
     fontSize: "1rem"
   },
-  body: {}
 });
 
 class Post extends Component {
@@ -62,7 +61,11 @@ class Post extends Component {
               <div className={classes.tags}>
                 {tags &&
                   tags.map(tag => (
-                    <Link key={tag} to={`/tags/${tag}`} className={classes.tags}>
+                    <Link
+                      key={tag}
+                      to={`/tags/${tag}`}
+                      className={classes.tags}
+                    >
                       #{tag}
                     </Link>
                   ))}

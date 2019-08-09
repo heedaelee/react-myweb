@@ -1,5 +1,6 @@
 import User from "model/User";
 import Joi from "joi";
+import getSocialProfile from "lib/getSocialProfile";
 
 // 로컬 회원가입
 exports.localRegister = async ctx => {
@@ -112,7 +113,7 @@ exports.localLogin = async ctx => {
     httpOnly: true,
     maxAge: 1000 * 60 * 60 * 24 * 7
   });
-  ctx.body = user.profile; //프로필 정보로 응답합니다.
+  ctx.body = user; //프로필 정보로 응답합니다.
 };
 
 //이메일 / 아이디 체크
@@ -135,7 +136,6 @@ exports.exists = async ctx => {
   };
 };
 
-
 // 현재 로그인 check API (쿠키에 access_token 여부에 따라)
 exports.check = ctx => {
   const { user } = ctx.request; //로그인 될시 user가 들어감
@@ -154,7 +154,183 @@ exports.logout = async ctx => {
   });
   ctx.status = 204;
 };
-/* exports.logout = (ctx) => {
-  ctx.session = null;
-  ctx.status= 204; //no content
-}; */
+
+exports.verifySocial = async ctx => {
+  const { accessToken } = ctx.request.body;
+  const { provider } = ctx.params;
+  console.log(` exports.verifySocial 
+  accessToken : ${accessToken}
+  provider : ${provider}
+  `);
+
+  let profile = null;
+
+  try {
+    profile = await getSocialProfile(provider, accessToken);
+    console.log(
+      `/api/auth/auth.ctrl verifySocial after getSocialProfile profile : ${profile.toString()}`
+    );
+  } catch (e) {
+    console.log(e);
+    ctx.status = 401;
+    ctx.body = {
+      name: "WRONG_CREDENTIAL"
+    };
+  }
+
+  if (!profile) {
+    ctx.status = 401;
+    ctx.body = {
+      name: "WRONG_CREDENTIAL"
+    };
+    return;
+  }
+
+  let user = null;
+  try {
+    if (profile.email) {
+      user = await User.findByEmail(profile.email);
+      console.log(
+        `/api/auth/auth.ctrl verifySocial after getSocialProfile user : ${user}`
+      );
+    }
+    ctx.body = {
+      profile,
+      exists: !!user
+    };
+  } catch (e) {
+    ctx.throw(500, e);
+  }
+};
+
+//소셜 회원가입 (POST)
+exports.socialRegister = async ctx => {
+  //데이터 검증
+  const schema = Joi.object().keys({
+    email: Joi.string()
+      .email()
+      .required()
+      .label("이메일"),
+    username: Joi.string()
+      .required()
+      .label("네임"),
+    thumbnail: Joi.string()
+      .required()
+      .label("썸네일"),
+    type: Joi.string()
+      .required()
+      .label("타입"),
+    id: Joi,
+    token: Joi
+  });
+
+  const result = Joi.validate(ctx.request.body, schema);
+
+  //스키마 검증 실패
+  if (result.error) {
+    console.log(`여기서 에러난당 ${JSON.stringify(result)}`);
+    ctx.status = 400; //Bad Request
+    return;
+  }
+  const { provider } = ctx.params;
+  const { token: accessToken } = ctx.request.body; //새로운 변수 이름으로 구조분해 할당
+  console.log(`[back/src/api/auth.. /socialRegister 
+    provider : ${provider}
+    accessToken : ${accessToken}
+    `);
+
+  let profile = null;
+  try {
+    profile = await getSocialProfile(provider, accessToken);
+    console.log(`[back/src/api/auth.. /socialRegister 
+      profile : ${profile}`);
+  } catch (e) {
+    ctx.status = 401;
+    ctx.body = {
+      name: "WRONG_CREDENTIALS"
+    };
+    return;
+  }
+
+  // 아이디 / 이메일 중복 체크
+  let existing = null;
+  try {
+    existing = await User.findByEmailOrUsername(ctx.request.body);
+  } catch (e) {
+    ctx.throw(500, e);
+  }
+
+  if (existing) {
+    //중복되는 아이디/ 이메일이 있을 경우
+    ctx.status = 409; //conflict
+    //어떤 값이 중복 되었는지 알려줍니다.
+    ctx.body = {
+      key: existing.email === ctx.request.body.email ? "email" : "username"
+    };
+    return;
+  }
+
+  //계정생성
+  let user = null;
+  try {
+    user = await User.socialRegister(ctx.request.body);
+    
+  } catch (e) {
+    ctx.throw(500, e);
+  }
+
+  ctx.cookies.set("access_token", ctx.request.body.token, {
+    httpOnly: true,
+    maxAge: 1000 * 60 * 60 * 24 * 7
+  });
+  console.log(`계정생성 던지기 전 user : ${user}`);
+  ctx.body = {user}; //프로필 정보로 응답합니다.
+};
+
+//소셜 로그인
+exports.socialLogin = async ctx => {
+  const { accessToken } = ctx.request.body;
+  const { provider } = ctx.params;
+
+  if (typeof accessToken !== "string") {
+    ctx.status = 400;
+    return;
+  }
+
+  let profile = null;
+
+  try {
+    profile = await getSocialProfile(provider, accessToken);
+
+    if (profile === null || profile === undefined) {
+      ctx.status = 401;
+      ctx.body = {
+        name: "WRONG_CREDENTIALS"
+      };
+      return;
+    }
+
+    let user = await User.findByEmail(profile.email);
+    if (!user) {
+      ctx.status = 401;
+      ctx.body = {
+        name: "NOT_REGISTERED"
+      };
+      return;
+    }
+    //if user is found,
+    let token = null;
+    token = await user.generateToken();
+
+    ctx.cookies.set("access_token", token, {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24 * 7
+    });
+    ctx.body = user;
+  } catch (e) {
+    ctx.status = 401;
+    ctx.body = {
+      name: "WRONG_CREDENTIALS"
+    };
+  }
+};

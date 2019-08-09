@@ -8,12 +8,12 @@ import CssBaseLine from "@material-ui/core/CssBaseline";
 import { menuList } from "./menuList";
 import HeaderContainer from "containers/common/HeaderContainer";
 import { drawerWidth } from "components/common/commonCss";
-import 'styles/utils.scss'
+import "styles/utils.scss";
 
 const styles = theme => ({
   root: {
     display: "flex",
-    fontFamily: 'NanumBarunGothic, sans-serif',
+    fontFamily: "NanumBarunGothic, sans-serif"
   },
   drawer: {
     [theme.breakpoints.up("md")]: {
@@ -71,15 +71,12 @@ class PageTemplate extends React.Component {
               anchor={theme.direction === "rtl" ? "right" : "left"}
               open={this.state.mobileOpen}
               onClose={this.handleDrawerToggle}
-              classes={{paper: classes.drawerPaper}}
+              classes={{ paper: classes.drawerPaper }}
             >
               {drawer}
             </Drawer>
           </Hidden>
-          <Drawer
-            classes={{paper: classes.drawerPaper}}
-            variant="permanent"
-          >
+          <Drawer classes={{ paper: classes.drawerPaper }} variant="permanent">
             {drawer}
           </Drawer>
         </nav>

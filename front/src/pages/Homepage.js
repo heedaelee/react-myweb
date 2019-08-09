@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import { PageTemplate } from "components/common";
-import { Card, Tag } from "components/main";
+import { Tag } from "components/main";
 import ListContainer from "containers/list/ListContainer";
 import { MainWrapper } from "components/main";
 
@@ -12,7 +12,7 @@ const Homepage = ({ match }) => {
   return (
     <PageTemplate>
       <MainWrapper
-        card={<Card />}
+        //card={<Card />} 나중에 혹시 캐러셀 달거나 할때..
         ListContainer={<ListContainer page={parseInt(page, 10)} tag={tag} />}
         tag={<Tag />}
       />

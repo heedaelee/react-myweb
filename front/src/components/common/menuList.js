@@ -11,17 +11,28 @@ export const menuList = (
   <>
     <Divider />
     <List>
-      {["개발노트", "Thought"].map((text, index) => {
-        if (text === "개발노트") {
+      {["List", "Profile"].map((text, index) => {
+        if (text === "List") {
           return (
-            <ListItem button key={text} component={Link} to="/개발">
+            <ListItem button key={text} component={Link} to="/">
               <ListItemIcon>
                 <InboxIcon />
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
           );
-        } else {
+        }
+        if(text === "Profile"){
+          return (
+            <ListItem button key={text} component={Link} to="/profile">
+              <ListItemIcon>
+                <InboxIcon />
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          )
+        }
+        else {
           return (
             <ListItem button key={text}>
               <ListItemIcon>

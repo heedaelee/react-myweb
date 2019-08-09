@@ -53,13 +53,13 @@ class EditorHeader extends React.Component {
             <MenuIcon className={classes.menuIcon} />
           </IconButton>
           <div className={classes.buttonGroup}>
-            <Button className={classes.back} onClick={onGoBack} theme="outline">
+            <Button className={classes.back} onClick={onGoBack} theme="default">
               뒤로가기
             </Button>
             <Button
               className={classes.submit}
               onClick={onSubmit}
-              theme="outline"
+              theme="default"
             >
               {isEdit ? "수정" : "작성"}하기
             </Button>

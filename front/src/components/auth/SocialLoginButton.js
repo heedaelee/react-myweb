@@ -31,8 +31,8 @@ const Wrapper = styled.div`
 /* TODO naver,kakao 클릭 구현해야함 */
 const AuthButton = ({ onSocialLogin }) => (
   <div>
-    <Wrapper type="naver" onSocialLogin={onSocialLogin}>네이버로 로그인</Wrapper>
-    <Wrapper type="facebook" onSocialLogin={onSocialLogin}>페이스북으로 로그인</Wrapper>
+    <Wrapper type="naver" onClick={onSocialLogin}>네이버로 로그인</Wrapper>
+    <Wrapper type="facebook" onClick={onSocialLogin}>페이스북으로 로그인</Wrapper>
   </div>
 );
 

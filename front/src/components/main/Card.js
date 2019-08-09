@@ -1,4 +1,5 @@
 /* eslint-disable react/no-typos */
+// 캐러셀 달거나 할때, 임시로 놔둠
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";

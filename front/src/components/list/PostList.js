@@ -34,7 +34,7 @@ const styles = theme => ({
     "&:hover": {
       textDecoration: "underline"
     },
-    marginRight: '7px',
+    marginRight: "7px"
   },
   cardMedia: {
     width: "160px",
@@ -56,32 +56,44 @@ const styles = theme => ({
       fontSize: "0.9rem"
     }
   },
-  cardContents: {
+  cardBodyText: {
     [theme.breakpoints.down("sm")]: {}
-  }
+  },
+  cardContent: {}
 });
 
-const PostItem = ({ id, title, body, tags, publishedDate, classes }) => {
+const PostItem = ({
+  id,
+  title,
+  body,
+  tags,
+  publishedDate,
+  classes,
+  img = "default to avoid error"
+}) => {
   const tagList = tags.map(tag => {
     return (
       <Link key={tag} href={`/tag/${tag}`} className={classes.link}>
         #{tag}
       </Link>
-    
     );
   });
-
+  console.log(`이미지 props 로딩 : ${img}`);
   return (
     <Grid item key={id} xs={12} md={12}>
-      <CardActionArea  href={`/post/${id}`}>
+      <CardActionArea
+        onClick={() =>
+          (window.location.href = `/post/${id}`)
+        } /* href={`/post/${id}`} */
+      >
         <Card className={classes.card}>
           <CardMedia
             className={classes.cardMedia}
-            image="https://source.unsplash.com/random"
+            image={img}
             title="Image title"
           />
           <div className={classes.cardDetails}>
-            <CardContent>
+            <CardContent className={classes.cardContent}>
               <Typography
                 className={classes.cardTitle}
                 component="h2"
@@ -97,7 +109,7 @@ const PostItem = ({ id, title, body, tags, publishedDate, classes }) => {
                 {moment(publishedDate).format("ll")}
               </Typography>
               <Typography
-                className={classes.cardContents}
+                className={classes.cardBodyText}
                 variant="subtitle1"
                 paragraph
               >
@@ -113,8 +125,9 @@ const PostItem = ({ id, title, body, tags, publishedDate, classes }) => {
 };
 
 const PostList = props => {
-  const { classes, posts } = props;
-  const postList = posts.map(post => {
+  const { classes, posts, imgUrl } = props;
+  console.log(`PostList에서 imgUrl : ${imgUrl}`);
+  const postList = posts.map((post, i) => {
     const { _id, title, body, publishedDate, tags } = post.toJS();
     return (
       <PostItem
@@ -125,6 +138,7 @@ const PostList = props => {
         publishedDate={publishedDate}
         tags={tags}
         classes={classes}
+        img={imgUrl[i]}
       />
     );
   });

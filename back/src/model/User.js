@@ -18,10 +18,29 @@ function hash(password) {
     .digest("hex");
 }
 
+/*
+  몽고DB 스키마(Schema) 생성(회원)
+    1. profile
+     1-1. username: 닉네임(문자열-String)
+     1-2. thumbnail: 프로필 사진(문자열-String)
+    2. email: 이메일(문자열-String)
+    3. social
+     3-1. facebook
+      3-1-1. id: 페이스북 회원키(문자열-String)
+      3-1-2. accessToken: 페이스북 토큰(문자열-String)
+     3-2. naver
+      3-2-1. id: 네이버 회원키(문자열-String)
+      3-2-2. accessToken: 네이버 토큰(문자열-String)
+    4. password: 패스워드 해싱값(문자열-String)
+    5. thoughtCount: 포인트(숫자-Number)
+    6. createdAt: 글 생성 날짜(날짜-Date)
+    7. isCertificated: 회원인증코드(문자열-String)
+*/
+
 const User = new Schema({
   profile: {
     username: String,
-    thumbnail: String,   //{ type: String, default: "/static/images/default_thumbnail.png" }
+    thumbnail: String //{ type: String, default: "/static/images/default_thumbnail.png" }
   },
   email: { type: String },
   //소셜 계정으로 회원가입을 할 경우엔 각 서비스에서 제공되는 id와 accessToken을 저장합니다.
@@ -73,6 +92,34 @@ User.statics.localRegister = function({ username, email, password }) {
     },
     email,
     password: hash(password)
+  });
+
+  return user.save();
+};
+
+//사용자 소셜 등록 메소드
+User.statics.socialRegister = function({
+  id,
+  thumbnail,
+  email,
+  username,
+  type,
+  token
+}) {
+  //데이터를 생성 할 때는 new this()를 사용합니다.
+  const user = new this({
+    profile: {
+      username,
+      thumbnail
+    },
+    email,
+    social: {
+      [type]: {
+        id: id,
+        accessToken: token
+      }
+    },
+    isCertificated: 0
   });
 
   return user.save();

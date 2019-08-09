@@ -13,7 +13,6 @@
       color: #000;
     }
   }
-
   .contents {
     display: flex;
     flex-direction: column;
@@ -32,23 +31,41 @@
       }
     }
     .infor {
-      .table{
+      .table {
         margin-top: 2.5rem;
         width: 80vh;
         tr {
           height: 40px;
         }
         th {
-          color:#656565;
+          color: #656565;
           text-align: left;
         }
         td {
+          width: 162px;
+          word-break: break-all;
           text-align: left;
         }
+        
       }
+    }
+  }
+  .form {
+    input {
+    }
+  }
+  .right {
+    display: flex;
+    justify-content: flex-end;
+    button + button {
+      margin-left: 0.5rem;
     }
   }
   .leave {
     margin-top: 2rem;
   }
+  .left {
+    text-align: left;
+  }
+  
 }

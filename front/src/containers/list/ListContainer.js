@@ -4,32 +4,54 @@ import { connect } from "react-redux";
 import * as listActions from "store/modules/list";
 
 import { PostList, Pagination } from "components/list";
+import axios from "axios";
 
 class ListContainer extends Component {
   getPostList = () => {
     const { ListActions, page, tag } = this.props;
-    ListActions.getPostList({tag,page});
+    ListActions.getPostList({ tag, page });
   };
 
-  componentDidMount(){
+  componentDidMount() {
     this.getPostList();
+  }
+  componentWillMount() {
+    console.log(`마운트전 : ${this.getImageUrl()}`);
+  }
+
+  //unplash 랜덤 이미지 가져오기
+  getImageUrl = () => {
+    axios
+      .get(
+        `https://api.unsplash.com/photos/random?client_id=6cc4985ca5efc8f8712fe98bc39d5209aa4c89c1387732976d1c8dbcd7297130&count=10`
+      )
+      .then(response => {
+        //console.log("배열체크 : " + response.data);
+        let imgArray = response.data.map(x => x.urls.small);
+        this.setState(imgArray);
+      });
   };
 
-  componentDidUpdate(prevProps,prevState){
+  state = {};
+
+  componentDidUpdate(prevProps, prevState) {
     // 페이지/태그가 바뀔 때 리스트를 다시 불러옵니다.
-    if(prevProps.page !== this.props.page
-      || prevProps.tag !== this.props.tag){
-        this.getPostList();
-        document.documentElement.scrollTop = 0;
-      }
-  };
+    if (
+      prevProps.page !== this.props.page ||
+      prevProps.tag !== this.props.tag
+    ) {
+      this.getPostList();
+      document.documentElement.scrollTop = 0;
+    }
+  }
 
   render() {
+    console.log(`마운트 된 후 값 : ${JSON.stringify(this.state)}`);
     const { page, tag, lastPage, posts, loading } = this.props;
     if (loading) return null; //로딩중엔 암것도 안보여줌
     return (
       <div>
-        <PostList posts={posts} />
+        <PostList posts={posts} imgUrl={this.state} />
         <Pagination page={page} lastPage={lastPage} tag={tag} />
       </div>
     );

@@ -10,7 +10,7 @@ exports.checkLogin = (ctx, next) => {
 };
 
 /*
-  GET /api/profile/:id
+  GET /api/profile/:username
 */
 
 exports.read = async ctx => {

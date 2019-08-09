@@ -27,17 +27,18 @@ const styles = theme => ({
     boxShadow: "none",
     borderBottom: "1px solid rgba(0, 0, 0, 0.12)"
   },
-  menuButton: {
-    marginRight: 20
-    /* [theme.breakpoints.up("sm")]: {
-      display: "none"
-    } */
-  },
+  menuButton: {},
   menuIcon: {
     color: "#4a4a4a"
   },
   buttonGroup: {
-    marginLeft: "auto"
+    marginLeft: "auto",
+    display: "flex"
+  },
+  title: {
+    [theme.breakpoints.down("sm")]: {
+      fontSize: `16px`
+    }
   }
 });
 
@@ -57,6 +58,9 @@ class Header extends React.Component {
     console.log("로그드 유저네임", username);
     console.log("게시물 유저네임", post.username);
 
+    console.log(`post.username : ${post.username} 
+                  username : ${username} `);
+
     return (
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
@@ -70,28 +74,34 @@ class Header extends React.Component {
               <MenuIcon className={classes.menuIcon} />
             </IconButton>
           </Hidden>
-          <Typography href="/" variant="h6" color="inherit">
+          <Typography
+            href="/"
+            variant="h6"
+            color="inherit"
+            className={classes.title}
+          >
             <Link color="inherit" href="/">
-              David Blog
+              블로그 플랫폼
             </Link>
           </Typography>
           <div className={classes.buttonGroup}>
             {logged && (
               <>
-                {post.username === username && [
-                  //flex 유지를 위해 배열로
-                  <Button
-                    key="edit"
-                    theme="outline"
-                    to={`/editor?id=${postId}`}
-                  >
-                    수정
-                  </Button>,
-                  <Button key="remove" theme="outline" onClick={onRemove}>
-                    삭제
-                  </Button>
-                ]}
-                <Button to="/editor" theme="outline">
+                {post.username &&
+                  post.username === username && [
+                    //flex 유지를 위해 배열로
+                    <Button
+                      key="edit"
+                      theme="default"
+                      to={`/editor?id=${postId}`}
+                    >
+                      수정
+                    </Button>,
+                    <Button key="remove" theme="default" onClick={onRemove}>
+                      삭제
+                    </Button>
+                  ]}
+                <Button to="/editor" theme="default">
                   새 포스트
                 </Button>
               </>
@@ -99,8 +109,6 @@ class Header extends React.Component {
             <Button onClick={onLoginClick}>
               {logged ? "로그아웃" : "로그인/가입"}
             </Button>
-
-            
           </div>
         </Toolbar>
       </AppBar>

@@ -82,7 +82,6 @@ class ProfileContainer extends Component {
     //파일 선택후 확인 누르면 onChange 적용
     upload.onchange = e => {
       if (!upload.files) return;
-
       let data = new FormData();
       const files = e.target.files;
       const fileToUpload = files[0];
@@ -95,9 +94,14 @@ class ProfileContainer extends Component {
 
   //핸들링 함수 차이 알아보기
   handleRemoveMember = () => {
-    console.log('프로필컨테이너 handleRemoveMember')
+    console.log("프로필컨테이너 handleRemoveMember");
     const { BaseActions } = this.props;
     BaseActions.showModal("unregister");
+  };
+
+  handleChange = ({name,value}) => {
+    console.log(`체인지 핸들러탐 name: ${name} value: ${value}` )
+    
   }
 
   render() {
@@ -116,8 +120,8 @@ class ProfileContainer extends Component {
         social={social}
         onUploadThumbnail={this.onUploadThumbnail}
         onRemove={this.handleRemoveMember}
+        onChange = {this.handleChange}
       />
-      
     );
   }
 }
@@ -133,6 +137,6 @@ export default connect(
   dispatch => ({
     ProfileActions: bindActionCreators(profileActions, dispatch),
     UserActions: bindActionCreators(userActions, dispatch),
-    BaseActions: bindActionCreators(baseActions, dispatch),
+    BaseActions: bindActionCreators(baseActions, dispatch)
   })
 )(ProfileContainer);

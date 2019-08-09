@@ -3,7 +3,7 @@ import Joi from "joi";
 
 import { Types } from "mongoose";
 
-exports.checkObjectId = (ctx, next) => {
+export const checkObjectId = (ctx, next) => {
   const { id } = ctx.params;
   const { ObjectId } = Types;
 
@@ -15,20 +15,11 @@ exports.checkObjectId = (ctx, next) => {
   return next(); // next를 리턴해주어야 ctx.body가 제대로 설정됩니다.
 };
 
-/* exports.checkLogin = (ctx, next) => {
-  if (!ctx.request.header.cookie) {
-    ctx.status = 401; //Unauthorized
-    return null;
-  }
-  console.log("exports.checkLogin 토큰 확인");
-  return next();
-}; */
-
 /* 
   POST /api/posts
   {title, body, tags}
 */
-exports.write = async ctx => {
+export const write = async ctx => {
   const schema = Joi.object().keys({
     title: Joi.string().required(),
     body: Joi.string().required(),
@@ -47,7 +38,7 @@ exports.write = async ctx => {
   }
 
   const { title, body, tags, username } = ctx.request.body;
-  console.log("in post.ctrl exports.write=> username=", username);
+  console.log("in post.ctrl export const write=> username=", username);
 
   const post = new Post({
     username,
@@ -67,7 +58,7 @@ exports.write = async ctx => {
 /* 
   GET /api/posts
 */
-exports.list = async ctx => {
+export const list = async ctx => {
   //page가 주어지지 않았다면 1로 간주
   //query 는 문자열 형태로 받아 오므로 숫자로 변환
   const page = parseInt(ctx.query.page || 1, 10);
@@ -110,9 +101,9 @@ exports.list = async ctx => {
   {title, body, tags}
 */
 
-exports.update = async ctx => {
+export const update = async ctx => {
   const { id } = ctx.params;
-  console.log('PATCH /api/posts/:id',id)
+  console.log("PATCH /api/posts/:id", id);
   try {
     const post = await Post.findByIdAndUpdate(id, ctx.request.body, {
       new: true //이값을 설정해줘야, 업뎃후 값 반환
@@ -130,7 +121,7 @@ exports.update = async ctx => {
 /*
   GET /api/posts/:id
 */
-exports.read = async ctx => {
+export const read = async ctx => {
   const { id } = ctx.params;
   try {
     const post = await Post.findById(id).exec();
@@ -148,15 +139,52 @@ exports.read = async ctx => {
 /* 
   DELETE /api/posts/:id
 */
-
-exports.remove = async ctx => {
+export const remove = async ctx => {
   const { id } = ctx.params;
-  console.log('DELETE /api/posts/:id',id)
+  console.log("DELETE /api/posts/:id", id);
 
   try {
     await Post.findByIdAndRemove(id).exec();
     ctx.status = 204;
   } catch (e) {
     ctx.throw(e, 500);
+  }
+};
+
+/* 
+  GET /api/posts/tags
+*/
+export const getTags = async ctx => {
+  console.log("  GET /api/posts/tags 탐");
+
+  try {
+    let mixArray = [];
+    const Tags = await Post.getTags();
+    Tags.map(x => {
+      mixArray = mixArray.concat(x.tags);
+    }); //concat은 원본을 카피해서 붙임!
+    //console.log(`mixArray: ${JSON.stringify(mixArray)}`); //[, , , , ,]
+
+    const TagsNewArray = arrayUnique(mixArray);
+    //console.log(`tags중복값제거: ${TagsNewArray}`);
+
+    //중복값 제거 함수
+    function arrayUnique(a) {
+      //console.log(`let a : ${JSON.stringify(a)}`);
+      for (var i = 0; i < a.length; ++i) {
+        for (var j = i + 1; j < a.length; ++j) {
+          if (a[i] === a[j]) {
+            //console.log(`i의a[${i}] : ${a[i]} , j의a[${j}] : ${a[j]}`);
+            a.splice(j, 1);
+            //제거명령 : [i]와 [j]번 째 같은게 있으면, 두번째[j]번째 나온건 제거해!
+            //splice (index, 갯수)
+          }
+        }
+      }
+      return a;
+    }
+    ctx.body = TagsNewArray;
+  } catch (e) {
+    ctx.throw(500, e);
   }
 };

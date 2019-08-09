@@ -1,7 +1,4 @@
 import { createAction, handleActions } from "redux-actions";
-
-import { Map } from "immutable";
-import { pender } from "redux-pender";
 import produce from "immer";
 
 //action types
@@ -16,12 +13,7 @@ export const hideModal = createAction(HIDE_MODAL);
 const initialState = {
   modal: {
     remove: false,
-    login: false,
     unregister: false,
-  },
-  loginModal: {
-    password:"",
-    error:false
   },
   logged:false //현재 로그인 상태
 };
