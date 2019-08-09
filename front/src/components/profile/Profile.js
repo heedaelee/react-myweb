@@ -18,7 +18,7 @@ class Profile extends Component {
   //다시 값변하여 업데이트 인식되어 componentDidupdate 실행되고 또 setState 땜에 리랜더링..
   //이렇게 무한루프 됨
   componentDidMount() {
-    console.log("탄다", this.props.social);
+    // console.log("탄다", this.props.social);
     this.setState({ username: this.props.username });
     if (this.props.social.facebook) {
       this.setState({ checkedA: true });
@@ -39,13 +39,30 @@ class Profile extends Component {
   };
 
   //닉네임 변경, redux 없이 바로 비동기 서버 통신 axios 통해
-  onSubmit = () => {};
+  //리덕스 사용 안하니, update 이후 componentDidUpdate서
+  //손수 state값 변경해줘야 함, 변경된 props값 가지고
+  onSubmit = async () => {
+    const { updateProfile } = this.props;
+    console.log(`onSubmit의 username 값: ${this.state.username}`);
+    try {
+      await updateProfile({
+        username: this.state.username
+      });
+      this.setState({
+        editing: false
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
+  //리덕스 사용x, 현재 state 값 변경
   handleChange = e => {
-    const {onChange} = this.props
-    const {name, value} = e.target
-    console.log(`handlechange에서 name:${name} value: ${value}`)
-    onChange({name,value})
+    const { name, value } = e.target;
+    console.log(`handlechange에서 name:${name} value: ${value}`);
+    this.setState({
+      [name]: value
+    });
   };
 
   render() {
@@ -87,7 +104,7 @@ class Profile extends Component {
               */
               alt="thumbnail"
             />
-            <strong className="username">{username}</strong>
+            <strong className="username">{this.props.username}</strong>
             <Button onClick={onUploadThumbnail} theme="default">
               프로필 사진 변경
             </Button>

@@ -17,6 +17,7 @@ export const checkStatus = createAction(CHECK_STATUS, AuthAPI.checkStatus);
 
 const initialState = {
   loggedInfo : { //현재 로그인중인 유저의 정보
+    
     thumbnail : null,
     username: null
   },

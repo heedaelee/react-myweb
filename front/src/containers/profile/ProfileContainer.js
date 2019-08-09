@@ -99,17 +99,13 @@ class ProfileContainer extends Component {
     BaseActions.showModal("unregister");
   };
 
-  handleChange = ({name,value}) => {
-    console.log(`체인지 핸들러탐 name: ${name} value: ${value}` )
-    
-  }
-
   render() {
     const { user, loading } = this.props;
-
+    const { updateProfile } = this.props.ProfileActions;
     if (loading) return null;
     const { profile, social, email, password, thoughtCount } = user;
     const { username, thumbnail } = profile;
+    console.log("profile : " + JSON.stringify(profile));
     return (
       <Profile
         email={email}
@@ -120,7 +116,7 @@ class ProfileContainer extends Component {
         social={social}
         onUploadThumbnail={this.onUploadThumbnail}
         onRemove={this.handleRemoveMember}
-        onChange = {this.handleChange}
+        updateProfile={updateProfile}
       />
     );
   }

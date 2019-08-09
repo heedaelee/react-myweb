@@ -21,8 +21,9 @@ function hash(password) {
 /*
   몽고DB 스키마(Schema) 생성(회원)
     1. profile
-     1-1. username: 닉네임(문자열-String)
-     1-2. thumbnail: 프로필 사진(문자열-String)
+     1-1. id id(문자열-String)_수정추가_8/18
+     1-2. username: 닉네임(문자열-String)
+     1-3. thumbnail: 프로필 사진(문자열-String)
     2. email: 이메일(문자열-String)
     3. social
      3-1. facebook

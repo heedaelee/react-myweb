@@ -29,10 +29,9 @@ exports.read = async ctx => {
 };
 
 exports.update = async ctx => {
-  console.log("탄다");
-
   const { username } = ctx.params;
   const { thumbnail } = ctx.request.body;
+  console.log("profile.ctrl/update탄다 username :", username);
   const query = { "profile.username": username };
   try {
     const user = await User.findOneAndUpdate(
@@ -54,11 +53,11 @@ exports.remove = async ctx => {
   const { username } = ctx.params;
   try {
     const query = { "profile.username": username };
-    const result = await User.findOneAndRemove(query)
+    const result = await User.findOneAndRemove(query);
     ctx.cookies.set("access_token", "");
     // process unregister
     ctx.status = 204;
-    console.log(result)
+    console.log(result);
   } catch (e) {
     ctx.status = 400;
   }
