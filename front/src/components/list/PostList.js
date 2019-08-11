@@ -69,7 +69,7 @@ const PostItem = ({
   tags,
   publishedDate,
   classes,
-  img = "default to avoid error"
+  img = "when_Mounting_preventing_materialui_imgsrcLoaidngError"
 }) => {
   const tagList = tags.map(tag => {
     return (

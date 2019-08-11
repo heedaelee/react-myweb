@@ -7,7 +7,7 @@ exports.upload = async ctx => {
   if (!file) {
     ctx.status = 400;
     ctx.body = {
-      name: 'FILE_NOT_GIVEN',
+      name: "FILE_NOT_GIVEN"
     };
     return;
   }
@@ -22,10 +22,13 @@ exports.upload = async ctx => {
     fileExtension
   );
   console.log(mixedFileName.toString());
-  const fileNamePath = path.join("/Users/David/ReactProject/react-myweb/front/public/tempfile", mixedFileName); //사진 경로를 front 서버에 /public으로 
+  const fileNamePath = path.join(
+    "/Users/David/ReactProject/react-myweb/front/public/tempfile",
+    mixedFileName
+  ); //사진 경로를 front 서버에 /public으로
   const stream = fs.createWriteStream(fileNamePath);
   reader.pipe(stream);
   console.log("uploading %s -> %s", file.name, stream.path);
 
-  ctx.body = {imgName:mixedFileName};
+  ctx.body = { imgName: mixedFileName };
 };

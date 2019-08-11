@@ -24,16 +24,16 @@ class CallBack extends Component {
       return;
     }
     //api키 =>jwt hash화 토큰 해서 가져오기
-     try {
+    try {
       /*await AuthActions.getProviderToken({
         type,
         key
       });*/
- 
+
       // register logic
       /* const { token } = this.props.tokenData; */ //해쉬화 된 토큰(sns id)
       // if (!token) return;
-      const token = key
+      const token = key;
       const socialPayload = {
         accessToken: token,
         provider: type
@@ -46,12 +46,10 @@ class CallBack extends Component {
       // login if account already exists
       if (this.props.verifySocialResult.exists) {
         await AuthActions.socialLogin(socialPayload);
-        const { authResult } = this.props;
-        if (!authResult) return;
-        const { profile } = authResult;
-        const loggedInfo = profile;
+        if (!this.props.authResult) return;
+        const { loggedInfo } = this.props.authResult;
 
-        console.log("로컬에 소셜 로그인 후 토큰 set", loggedInfo);
+        console.log("로컬에 소셜 로그인 후 set", loggedInfo);
         storage.set("loggedInfo", loggedInfo); //1. 로컬 스토리지에 save
         UserActions.setLoggedInfo(loggedInfo); //2. 내부 스토어 state 저장
         UserActions.setValidated(true);
@@ -61,14 +59,9 @@ class CallBack extends Component {
       }
 
       //id,thumbnail,email,name,exists
-      const {
-        id,
-        thumbnail,
-        email,
-        name,
-      } = this.props.verifySocialResult;
-      const provider = type
-      const username = name 
+      const { id, thumbnail, email, name } = this.props.verifySocialResult;
+      const provider = type;
+      const username = name;
       await AuthActions.socialRegister({
         id,
         thumbnail,
@@ -76,13 +69,14 @@ class CallBack extends Component {
         username,
         type,
         token,
-        provider,
+        provider
       });
-      console.log(`[front / src ... callback authResult : ${this.props.authResult}]`)
-      const { user } = this.props.authResult;
-      const loggedInfo = user.profile;
+      console.log(
+        `[front / src ... callback authResult : ${this.props.authResult}]`
+      );
+      const { loggedInfo } = this.props.authResult;
 
-      console.log("로컬에 소셜 회원가입 후 토큰 set", loggedInfo);
+      console.log("로컬에 소셜 회원가입 후 set", loggedInfo);
       storage.set("loggedInfo", loggedInfo); //1.로컬스토리지 save
       UserActions.setLoggedInfo(loggedInfo); //2.내부 스토어 state 저장
       UserActions.setValidated(true);
@@ -90,9 +84,9 @@ class CallBack extends Component {
       this.props.history.push("/"); //회원가입 성공시 홈페이지로 이동
     } catch (e) {
       //에러 처리하기
-      console.log(`e:${e}`)
+      console.log(`e:${e}`);
       this.setState({
-        badRequest: true,
+        badRequest: true
       });
     }
   };
@@ -120,6 +114,6 @@ export default connect(
   }),
   dispatch => ({
     AuthActions: bindActionCreators(authActions, dispatch),
-    UserActions: bindActionCreators(userActions, dispatch),
+    UserActions: bindActionCreators(userActions, dispatch)
   })
 )(CallBack);

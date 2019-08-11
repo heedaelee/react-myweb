@@ -11,7 +11,6 @@ const CHECK_USERNAME_EXISTS = "auth/CHECK_USERNAME_EXISTS"; //아이디 중복 �
 const LOCAL_REGISTER = "auth/LOCAL_REGISTER"; //이메일 가입
 const SOCIAL_REGISTER = "auth/SOCIAL_REGISTER"; //소셜 회원가입
 const LOCAL_LOGIN = "auth/LOCAL_LOGIN"; //이메일 로그인
-const LOGOUT = "auth/LOGOUT"; //로그아웃
 const SET_ERROR = "auth/SET_ERROR"; //에러 메시지 설정
 const GET_PROVIDER_TOKEN = "auth/GET_PROVIDER_TOKEN";
 const VERIFY_SOCIAL = "auth/VERIFY_SOCIAL";
@@ -37,7 +36,6 @@ export const socialRegister = createAction(
 );
 
 export const localLogin = createAction(LOCAL_LOGIN, AuthApi.localLogin); // param : {username, password}
-export const logout = createAction(LOGOUT, AuthApi.logout); //no param
 export const setError = createAction(SET_ERROR); // param : {form, error}
 export const getProviderToken = createAction(
   GET_PROVIDER_TOKEN,
@@ -68,7 +66,9 @@ const initialState = {
     },
     error: null
   },
-  result: {},
+  result: {
+    loggedInfo: null
+  },
   tokenData: {
     type: null,
     token: null
@@ -119,14 +119,20 @@ export default handleActions(
       type: LOCAL_REGISTER,
       onSuccess: (state, action) =>
         produce(state, draft => {
-          draft.result = action.payload.data;
+          const { _id: id, profile } = action.payload.data.user; //return {user:}
+          const { thumbnail, username } = profile;
+          const loggedInfo = { id, thumbnail, username };
+          draft.result = { loggedInfo };
         })
     }),
     ...pender({
       type: LOCAL_LOGIN,
       onSuccess: (state, action) =>
         produce(state, draft => {
-          draft.result = action.payload.data;
+          const { _id: id, profile } = action.payload.data.user; //return {user:}
+          const { thumbnail, username } = profile;
+          const loggedInfo = { id, thumbnail, username };
+          draft.result = { loggedInfo };
         })
     }),
     ...pender({
@@ -161,22 +167,26 @@ export default handleActions(
       }
     }),
     ...pender({
-      type: socialRegister,
+      type: SOCIAL_REGISTER,
       onSuccess: (state, action) => {
-        const { user } = action.payload.data;
-        console.log(`store/modules user : ${JSON.stringify(user)}`);
+        const { _id: id, profile } = action.payload.data.user;
+        const { thumbnail, username } = profile;
+        const loggedInfo = { id, thumbnail, username };
+        // console.log(`store/modules/auth/SOCIAL_REGISTER user : ${JSON.stringify(user)}`);
         return produce(state, draft => {
-          draft.authResult = { user };
+          draft.authResult = { loggedInfo };
         });
       }
     }),
     ...pender({
-      type: socialLogin,
+      type: SOCIAL_LOGIN,
       onSuccess: (state, action) => {
-        const { profile } = action.payload.data;
-        console.log(`프로필 읽나? ${profile}`)
+        const { _id: id, profile } = action.payload.data.user;
+        const { thumbnail, username } = profile;
+        const loggedInfo = { id, thumbnail, username };
+        // console.log(`store/modules/auth/SOCIAL_LOGIN user : ${JSON.stringify(user)}`);
         return produce(state, draft => {
-          draft.authResult = { profile };
+          draft.authResult = { loggedInfo };
         });
       }
     })

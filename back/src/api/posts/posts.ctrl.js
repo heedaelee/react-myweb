@@ -124,13 +124,14 @@ export const update = async ctx => {
 export const read = async ctx => {
   const { id } = ctx.params;
   try {
-    const post = await Post.findById(id).exec();
+    const post = await Post.findById(id); //.exec() 삭제함
     // 포스트가 존재하지 않음
     if (!post) {
       ctx.status = 404;
       return;
     }
     ctx.body = post;
+    
   } catch (e) {
     ctx.throw(e, 500);
   }

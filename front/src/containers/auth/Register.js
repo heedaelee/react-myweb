@@ -132,10 +132,9 @@ class Register extends Component {
         username,
         password
       });
-      const loggedInfo = this.props.result;
+      const { loggedInfo } = this.props.result;
 
       console.log("로컬에 set", loggedInfo);
-      // TODO : 로그인 정보 저장 (로컬스토리지/스토어)
       storage.set("loggedInfo", loggedInfo); //1.로컬스토리지 save
       UserActions.setLoggedInfo(loggedInfo); //2.내부 스토어 state 저장
       UserActions.setValidated(true);

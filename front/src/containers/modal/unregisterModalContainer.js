@@ -14,13 +14,13 @@ class unregisterModalContainer extends Component {
     BaseActions.hideModal("unregister");
   };
   handleConfirm = async () => {
-    const { user, ProfileActions, BaseActions, history } = this.props;
+    const { user, ProfileActions, BaseActions } = this.props;
     const { username } = user.loggedInfo;
     console.log("unregisterContainer username : ", username);
     try {
       await ProfileActions.unregister(username);
       BaseActions.hideModal("unregister");
-      storage.clear();
+      storage.remove("loggedInfo");
       window.location.href = '/';
     } catch (e) {
       console.log(e);

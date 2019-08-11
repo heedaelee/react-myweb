@@ -12,7 +12,7 @@ import storage from "lib/storage";
 class ProfileContainer extends Component {
   initialize = async () => {
     const loggedInfo = storage.get("loggedInfo");
-    console.log("initil", loggedInfo);
+    console.log("ProfileContainer/initialize method loggedInfo: ", loggedInfo);
     const { ProfileActions } = this.props;
 
     try {
@@ -57,17 +57,18 @@ class ProfileContainer extends Component {
       console.log(`data => ${data}`);
       const { ProfileActions } = this.props;
       await ProfileActions.uploadThumbnail(data);
-      console.log(`in 프로필컨테이너 imgName: ${this.props.imgName}`);
-      if (!this.props.imgName) return;
-      const imgName = this.props.imgName;
+      console.log(`in 프로필컨테이너 imgName: ${this.props.profile.imgName}`);
+      if (!this.props.profile.imgName) return;
+      const imgName = this.props.profile.imgName;
 
       //사진 서버 저장 후 프로필 변경해주기
       await ProfileActions.updateProfile({
-        username: this.props.user.profile.username,
+        id: this.props.profile.user._id,
+        // username: this.props.profile.user.profile.username,
         thumbnail: imgName
       });
 
-      const { loggedInfo } = this.props.auth;
+      const { loggedInfo } = this.props.user;
       const { UserActions } = this.props;
       await UserActions.checkStatus();
       storage.set("loggedInfo", loggedInfo);
@@ -100,10 +101,17 @@ class ProfileContainer extends Component {
   };
 
   render() {
-    const { user, loading } = this.props;
+    const { loading, UserActions } = this.props;
     const { updateProfile } = this.props.ProfileActions;
     if (loading) return null;
-    const { profile, social, email, password, thoughtCount } = user;
+    const {
+      profile,
+      social,
+      email,
+      password,
+      thoughtCount,
+      _id: id
+    } = this.props.profile.user;
     const { username, thumbnail } = profile;
     console.log("profile : " + JSON.stringify(profile));
     return (
@@ -117,6 +125,8 @@ class ProfileContainer extends Component {
         onUploadThumbnail={this.onUploadThumbnail}
         onRemove={this.handleRemoveMember}
         updateProfile={updateProfile}
+        id={id}
+        UserActions={UserActions}
       />
     );
   }
@@ -124,10 +134,11 @@ class ProfileContainer extends Component {
 
 export default connect(
   state => ({
-    user: state.profile.user, //{profile{},social{}}
-    posts: state.profile,
-    imgName: state.profile.imgName,
-    auth: state.user,
+    //user: state.profile.user, //{profile{},social{}}
+    //imgName: state.profile.imgName,
+    profile: state.profile,
+    //auth: state.user, //이름변경 auth ->user로
+    user: state.user,
     loading: state.pender.pending["profile/GET_PROFILE"]
   }),
   dispatch => ({

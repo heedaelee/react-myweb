@@ -14,8 +14,7 @@ const initialState = {
   modal: {
     remove: false,
     unregister: false,
-  },
-  logged:false //현재 로그인 상태
+  }
 };
 
 //reducer

@@ -11,7 +11,8 @@ const AskRemoveModal = ({ type, onConfirm, onCancel }) => {
   let msg = "";
   let title='';
   console.log('type.remove',type.remove)
-  if (type.remove) {
+  console.log('type.unregister',type.unregister)
+  if (type.remove) {//boolean
     visible = type.remove;
     msg = "이 포스트를 정말 삭제하시겠습니까?";
     title='포스트 삭제'
@@ -30,7 +31,8 @@ const AskRemoveModal = ({ type, onConfirm, onCancel }) => {
       </div>
       <div className={cx("option")}>
         <Button theme="gray" onClick={onConfirm}>
-          삭제
+          { type.remove && '삭제' }
+          { type.unregister && '탈퇴' }
         </Button>
         <Button onClick={onCancel}>취소</Button>
       </div>

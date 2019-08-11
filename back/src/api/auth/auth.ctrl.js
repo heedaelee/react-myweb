@@ -64,7 +64,7 @@ exports.localRegister = async ctx => {
     httpOnly: true,
     maxAge: 1000 * 60 * 60 * 24 * 7
   });
-  ctx.body = user.profile; //프로필 정보로 응답합니다.
+  ctx.body = { user }; //user객체 전체로 응답
 };
 
 //로컬 로그인 (POST)
@@ -113,7 +113,7 @@ exports.localLogin = async ctx => {
     httpOnly: true,
     maxAge: 1000 * 60 * 60 * 24 * 7
   });
-  ctx.body = user; //프로필 정보로 응답합니다.
+  ctx.body = { user }; //user객체로 응답, {user : }형식으로 다 통일
 };
 
 //이메일 / 아이디 체크
@@ -139,11 +139,13 @@ exports.exists = async ctx => {
 // 현재 로그인 check API (쿠키에 access_token 여부에 따라)
 exports.check = ctx => {
   const { user } = ctx.request; //로그인 될시 user가 들어감
+  console.log(`user가 뭐지 : ${JSON.stringify(ctx.request.user)}`);
+
   if (!user) {
     ctx.status = 401; //401 : 익명의 사용자, 403 로그인은 했는데 허가 x
     return;
   }
-  ctx.body = user.profile; //{username: , thumbnail: }
+  ctx.body = { user }; //{user : }형식으로 변환
 };
 
 //로그아웃
@@ -162,9 +164,7 @@ exports.verifySocial = async ctx => {
   accessToken : ${accessToken}
   provider : ${provider}
   `);
-
   let profile = null;
-
   try {
     profile = await getSocialProfile(provider, accessToken);
     console.log(
@@ -274,7 +274,6 @@ exports.socialRegister = async ctx => {
   let user = null;
   try {
     user = await User.socialRegister(ctx.request.body);
-    
   } catch (e) {
     ctx.throw(500, e);
   }
@@ -284,24 +283,24 @@ exports.socialRegister = async ctx => {
     maxAge: 1000 * 60 * 60 * 24 * 7
   });
   console.log(`계정생성 던지기 전 user : ${user}`);
-  ctx.body = {user}; //프로필 정보로 응답합니다.
+  ctx.body = { user };
+  //★★{user} 던져야 user 프로퍼티까지할당됨
+  //단순 = user 할당하면 user의 "값"만 할당되서
+  //나중에 꺼내쓸때 user로 할당받지 못한다.
 };
 
 //소셜 로그인
 exports.socialLogin = async ctx => {
   const { accessToken } = ctx.request.body;
   const { provider } = ctx.params;
-
   if (typeof accessToken !== "string") {
     ctx.status = 400;
     return;
   }
-
   let profile = null;
 
   try {
     profile = await getSocialProfile(provider, accessToken);
-
     if (profile === null || profile === undefined) {
       ctx.status = 401;
       ctx.body = {
@@ -326,7 +325,9 @@ exports.socialLogin = async ctx => {
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 7
     });
-    ctx.body = user;
+    console.log(`auth 컨트롤러user : ${JSON.stringify(user)}`);
+
+    ctx.body = { user };
   } catch (e) {
     ctx.status = 401;
     ctx.body = {
