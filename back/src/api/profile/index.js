@@ -4,7 +4,7 @@ import needsAuth from 'lib/middlewares/needsAuth'
 
 const profile = new Router()
 
-profile.get("/:username", needsAuth, profileCtrl.read)
+profile.get("/:id", needsAuth, profileCtrl.read)
 profile.post("/", needsAuth, profileCtrl.update)
 profile.delete("/:username", needsAuth, profileCtrl.remove)
 

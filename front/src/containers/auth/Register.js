@@ -109,6 +109,10 @@ class Register extends Component {
     AuthActions.initializeForm("register");
   }
 
+  handleKeyDown = e => {
+    e.key === 'Enter' && this.handleLocalRegister()
+  }
+
   handleLocalRegister = async () => {
     const { form, AuthActions, UserActions, error, history } = this.props;
     const { email, username, password, passwordConfirm } = form;
@@ -157,7 +161,7 @@ class Register extends Component {
   render() {
     const { email, username, password, passwordConfirm } = this.props.form;
     const { error } = this.props;
-    const { handleChange, handleLocalRegister } = this;
+    const { handleChange, handleLocalRegister, handleKeyDown } = this;
 
     return (
       <AuthContent title="회원가입">
@@ -190,6 +194,7 @@ class Register extends Component {
           type="password"
           value={passwordConfirm}
           onChange={handleChange}
+          onKeyDown={handleKeyDown}
         />
         {error && <AuthError>{error}</AuthError>}
         <AuthButton onClick={handleLocalRegister}>회원가입</AuthButton>

@@ -1,7 +1,7 @@
 import axios from "axios";
 import queryString from "query-string";
 
-export const getProfile = username => axios.get(`/api/profile/${username}`);
+export const getProfile = id => axios.get(`/api/profile/${id}`);
 export const uploadThumbnail = data => axios.post(`/api/upload`, data);
 export const updateProfile = ({ id, username, thumbnail }) =>
   axios.post(`/api/profile`, { id, username, thumbnail });

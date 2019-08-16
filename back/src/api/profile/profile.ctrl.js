@@ -14,13 +14,13 @@ exports.checkLogin = (ctx, next) => {
 */
 
 exports.read = async ctx => {
-  const { username } = ctx.params;
-  console.log("[서버]profile.ctrl/ id: ", username);
+  const { id } = ctx.params;
+  // console.log("[서버]profile.ctrl/ id: ", id);
   try {
     // 닉넴으로 회원 찾기, 이거 썼다가 취소함
-    const user = await User.findByUsername(username)
-    // const user = await User.findById(id);
-    console.log(`[서버]profile.ctrl/ user: ${user}`)
+    // const user = await User.findByUsername(username)
+    const user = await User.findById(id);
+    // console.log(`[서버]profile.ctrl/ user: ${user}`)
     if (!user) {
       ctx.status = 404;
       return;

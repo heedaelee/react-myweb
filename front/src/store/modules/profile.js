@@ -58,7 +58,7 @@ export default handleActions(
       type: UPDATE_PROFILE,
       onSuccess: (state, action) => {
         return produce(state, draft => {
-          draft.user = action.payload.data; //params : {user: }
+          draft.user = action.payload.data; //params : user 안의 data
         });
       }
     })

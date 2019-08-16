@@ -2,6 +2,7 @@ import Switch from "@material-ui/core/Switch";
 import TextField from "@material-ui/core/TextField";
 import Button from "components/common/Button";
 import React, { Component } from "react";
+import { AuthError } from "components/auth";
 import defaultThumbnail from "static/images/default_thumbnail.png";
 import "./Profile.scss";
 import storage from "lib/storage";
@@ -48,9 +49,12 @@ class Profile extends Component {
 
   onToggleEdit = e => {
     e.preventDefault();
-    console.log(`onToggleEdit탐`);
+    // console.log(`onToggleEdit탐`);
+    const { error, setError,username } = this.props;
+    if (error) setError(null);
     this.setState({
-      editing: !this.state.editing
+      editing: !this.state.editing,
+      username:username
     });
   };
 
@@ -78,7 +82,12 @@ class Profile extends Component {
         editing: false
       });
     } catch (e) {
-      console.log(e);
+      if (e.response.status === 409) {
+        console.log(`e.response : ${JSON.stringify(e.response)}`);
+        const { key } = e.response.data;
+        const message = key === "username" ? "이미 존재하는 닉네임입니다" : "";
+        return this.props.setError(message);
+      }
     }
   };
 
@@ -86,6 +95,8 @@ class Profile extends Component {
   handleChange = e => {
     const { name, value } = e.target;
     console.log(`handlechange에서 name:${name} value: ${value}`);
+    const { error, setError } = this.props;
+    if (error) setError(null);
     this.setState({
       [name]: value
     });
@@ -99,12 +110,15 @@ class Profile extends Component {
       thumbnail,
       onUploadThumbnail,
       onRemove,
-      social
+      social,
+      error
     } = this.props;
     console.log(`social : ${JSON.stringify(social)}`);
 
     const { editing, username } = this.state;
     console.log(`render()의 username : ${username}`);
+    console.log(`render()의 error : ${error}`);
+    console.log(`render()의 editing : ${editing}`);
 
     return (
       <div className="wrapper">
@@ -130,7 +144,6 @@ class Profile extends Component {
               */
               alt="thumbnail"
             />
-            <strong className="username">{this.props.username}</strong>
             <Button onClick={onUploadThumbnail} theme="default">
               프로필 사진 변경
             </Button>
@@ -158,13 +171,27 @@ class Profile extends Component {
                     </>
                   ) : (
                     <>
-                      <td>{username}</td>
+                      <td><strong>{username}</strong></td>
                       <td className="right">
                         <Button onClick={this.onToggleEdit}>닉네임 변경</Button>
                       </td>
                     </>
                   )}
                 </tr>
+                {/* 에러 표시 코드 */}
+                {editing &&
+                  (error && (
+                    <tr>
+                      <th />
+                      <td colSpan="2">
+                        {
+                          <AuthError>
+                            <div className="left">{error}</div>
+                          </AuthError>
+                        }
+                      </td>
+                    </tr>
+                  ))}
                 <tr>
                   <th>이메일</th>
                   <td>{email}</td>

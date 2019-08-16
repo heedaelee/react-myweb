@@ -66,6 +66,12 @@ const initialState = {
     },
     error: null
   },
+  profile: {
+    form: {
+      username: ""
+    },
+    error: null
+  },
   result: {
     loggedInfo: null
   },

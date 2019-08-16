@@ -5,6 +5,7 @@ import Profile from "components/profile/Profile";
 import * as profileActions from "store/modules/profile";
 import * as userActions from "store/modules/user";
 import * as baseActions from "store/modules/base";
+import * as authActions from "store/modules/auth";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import storage from "lib/storage";
@@ -16,7 +17,7 @@ class ProfileContainer extends Component {
     const { ProfileActions } = this.props;
 
     try {
-      await ProfileActions.getProfile(loggedInfo.username);
+      await ProfileActions.getProfile(loggedInfo.id);
     } catch (e) {
       console.log(e);
     }
@@ -26,9 +27,14 @@ class ProfileContainer extends Component {
     this.initialize();
   }
 
-  /* componentDidUpdate(prevProps) {
-    if(!prevProps) props 값 바뀌면 this.initialize
-  } */
+  //에러 리덕스 전송
+  setError = message => {
+    const { AuthActions } = this.props;
+    AuthActions.setError({
+      form: "profile",
+      message
+    });
+  };
 
   //test
   escapeForUrl = text => {
@@ -101,7 +107,7 @@ class ProfileContainer extends Component {
   };
 
   render() {
-    const { loading, UserActions } = this.props;
+    const { loading, UserActions, error } = this.props;
     const { updateProfile } = this.props.ProfileActions;
     if (loading) return null;
     const {
@@ -127,6 +133,8 @@ class ProfileContainer extends Component {
         updateProfile={updateProfile}
         id={id}
         UserActions={UserActions}
+        setError={this.setError}
+        error={error}
       />
     );
   }
@@ -139,11 +147,13 @@ export default connect(
     profile: state.profile,
     //auth: state.user, //이름변경 auth ->user로
     user: state.user,
+    error: state.auth.profile.error,
     loading: state.pender.pending["profile/GET_PROFILE"]
   }),
   dispatch => ({
     ProfileActions: bindActionCreators(profileActions, dispatch),
     UserActions: bindActionCreators(userActions, dispatch),
-    BaseActions: bindActionCreators(baseActions, dispatch)
+    BaseActions: bindActionCreators(baseActions, dispatch),
+    AuthActions: bindActionCreators(authActions, dispatch)
   })
 )(ProfileContainer);

@@ -24,10 +24,7 @@
       .img {
         width: 120px;
         height: 100px;
-      }
-      .username {
-        padding-top: 1rem;
-        text-align: center;
+        margin-bottom: 0.7rem;
       }
     }
     .infor {
@@ -46,7 +43,6 @@
           word-break: break-all;
           text-align: left;
         }
-        
       }
     }
   }
@@ -67,5 +63,4 @@
   .left {
     text-align: left;
   }
-  
 }
