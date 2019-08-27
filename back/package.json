@@ -20,7 +20,8 @@
     "mongoose": "^5.5.12"
   },
   "scripts": {
-    "start": "cross-env NODE_PATH=src nodemon --exec babel-node src/index.js --config nodemon.json"
+    "start": "cross-env NODE_PATH=src babel-node src/index.js --config nodemon.json",
+    "start:dev":"cross-env NODE_PATH=src nodemon --exec babel-node src/index.js --config nodemon.json"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

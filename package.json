@@ -7,7 +7,7 @@
     "concurrently": "^4.1.1"
   },
   "scripts": {
-    "server": "cd back && yarn start",
+    "server": "cd back && yarn start:dev",
     "client": "cd front && yarn start",
     "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\""
   },
