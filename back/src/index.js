@@ -22,14 +22,16 @@ const router = new Router();
 //비구조화 할당 문으로 process.env 내부 값에 대한 레퍼런스 작성
 const {
   PORT:port=4000, //값이 존재하지 않는다면 포트 4000번을 기본값으로 사용
-  MONGO_URI: mongoURI,
+  // MONGO_URI: mongoURI,
+  MONGO_URIPRO
 } = process.env;
+
 
 // MongoDB NodeJS 프라미스 사용 선언
 mongoose.Promise = global.Promise;
 
 //몽고 DB 접속
-mongoose.connect(mongoURI)
+mongoose.connect(MONGO_URIPRO,{ useNewUrlParser: true })
   .then(() => {console.log('몽고 DB 접속 완료'); })
   .catch((err) => { console.log(err); });
 
