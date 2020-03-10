@@ -15,22 +15,7 @@ class ListContainer extends Component {
   componentDidMount() {
     this.getPostList();
   }
-  componentWillMount() {
-    console.log(`마운트전 : ${this.getImageUrl()}`);
-  }
-
-  //unplash 랜덤 이미지 가져오기
-  getImageUrl = () => {
-    axios
-      .get(
-        `https://api.unsplash.com/photos/random?client_id=6cc4985ca5efc8f8712fe98bc39d5209aa4c89c1387732976d1c8dbcd7297130&count=10`
-      )
-      .then(response => {
-        //console.log("배열체크 : " + response.data);
-        let imgArray = response.data.map(x => x.urls.small);
-        this.setState(imgArray);
-      });
-  };
+  componentWillMount() {}
 
   state = {};
 
@@ -68,6 +53,7 @@ export default connect(
     ListActions: bindActionCreators(listActions, dispatch)
   })
 )(ListContainer);
+
 /* connect 내부는 아래처럼 생겼으니,,
 
   return (

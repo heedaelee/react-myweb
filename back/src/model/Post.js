@@ -26,7 +26,7 @@ const Post = new Schema({
 //모든태그 가져오기
 Post.statics.getTags = function() {
   return this.find(
-    { $where: "this.tags.length!==0" },//mlab에 where 안먹힘
+    { tags: {$ne:[]}},//mlab에 where 안먹힘 :3/8따라서 수정
     { _id: false, tags: true }
   ).exec();
 };

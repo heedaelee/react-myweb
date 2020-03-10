@@ -59,6 +59,8 @@ export const write = async ctx => {
   GET /api/posts
 */
 export const list = async ctx => {
+  console.log('동작!');
+  
   //page가 주어지지 않았다면 1로 간주
   //query 는 문자열 형태로 받아 오므로 숫자로 변환
   const page = parseInt(ctx.query.page || 1, 10);
