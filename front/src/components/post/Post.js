@@ -11,7 +11,7 @@ import MarkdownRender from "components/common/MarkdownRender";
 
 const styles = theme => ({
   mainGrid: {
-    marginTop: theme.spacing.unit * 3
+    marginTop: theme.spacing(3)
   },
   appBarSpacer: theme.mixins.toolbar,
   postInfo: {

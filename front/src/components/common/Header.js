@@ -12,17 +12,18 @@ import { withStyles } from "@material-ui/core/styles";
 import Link from "@material-ui/core/Link";
 import Button from "components/common/Button";
 
+
 const drawerWidth = 240;
 const styles = theme => ({
   appBar: {
     flex: 1,
     marginLeft: drawerWidth,
-    marginBottom: theme.spacing.unit * 4,
+    marginBottom: theme.spacing(4),
     [theme.breakpoints.up("sm")]: {
       width: `100%`
     },
-    backgroundColor: theme.palette.background.paper,
-    color: "black",
+    backgroundColor: theme.palette.primary.main,
+    color: 'white',
     zIndex: "1201",
     boxShadow: "none",
     borderBottom: "1px solid rgba(0, 0, 0, 0.12)"
@@ -39,7 +40,7 @@ const styles = theme => ({
     [theme.breakpoints.down("sm")]: {
       fontSize: `16px`
     }
-  }
+  },
 });
 
 class Header extends React.Component {
@@ -57,7 +58,8 @@ class Header extends React.Component {
     const { username, thumbnail } = loggedInfo;
     console.log("로그드 유저네임", username);
     console.log("게시물 유저네임", post.username);
-
+    
+    
     console.log(`post.username : ${post.username} 
                   username : ${username} `);
 
@@ -80,7 +82,7 @@ class Header extends React.Component {
             color="inherit"
             className={classes.title}
           >
-            <Link color="inherit" href="/">
+            <Link  className={classes.head} color="inherit" href="/">
               블로그 플랫폼
             </Link>
           </Typography>

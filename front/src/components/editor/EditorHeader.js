@@ -14,11 +14,11 @@ const styles = theme => ({
   appBar: {
     flex: 1,
     marginLeft: drawerWidth,
-    marginBottom: theme.spacing.unit * 4,
+    marginBottom: theme.spacing(4),
     [theme.breakpoints.up("sm")]: {
       width: `100%`
     },
-    backgroundColor: theme.palette.background.paper
+    backgroundColor: theme.palette.primary.main,
   },
   toolBar: {
     display: "flex",

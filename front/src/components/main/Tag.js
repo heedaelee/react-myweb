@@ -22,12 +22,13 @@ const styles = theme => ({
     width: "100%"
   },
   cardTitle: {
-    padding: theme.spacing.unit * 1,
-    marginBottom: "1rem"
+    padding: theme.spacing(1),
+    marginBottom: "1rem",
+    color: theme.palette.primary.main
   },
   cardContent: {
     display: "block",
-    padding: theme.spacing.unit * 1
+    padding: theme.spacing(1)
   },
   link: {
     color: "#2196f3",
@@ -64,11 +65,7 @@ class Tag extends Component {
     return (
       <Grid container className={classes.cardGrid}>
         <Card className={classes.card}>
-          <Typography
-            className={classes.cardTitle}
-            variant="h5"
-            color="primary"
-          >
+          <Typography className={classes.cardTitle} variant="h5">
             Tag
           </Typography>
           {TagTest.map(tag => (

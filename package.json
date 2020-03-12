@@ -13,7 +13,9 @@
     "start": " \"cd back && npm start\" \"cd front && npm start\" "
   },
   "dependencies": {
+    "@types/styled-components": "^5.0.1",
     "cross-env": "^5.2.0",
-    "koa-static": "^5.0.0"
+    "koa-static": "^5.0.0",
+    "react-icons": "^3.9.0"
   }
 }

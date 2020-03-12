@@ -28,10 +28,10 @@ const styles = theme => ({
   appBarSpacer: theme.mixins.toolbar,
   content: {
     [theme.breakpoints.down("sm")]: {
-      padding: theme.spacing.unit * 1
+      padding: theme.spacing(1)
     },
     flexGrow: 1,
-    padding: theme.spacing.unit * 5,
+    padding: theme.spacing(5),
     height: "100vh",
     overflow: "auto",
     borderRight: "1px solid rgba(0, 0, 0, 0.12)",

@@ -7,23 +7,20 @@ const styles = theme => ({
   root: {
     margin: "30px 0px",
     display: "flex",
-    justifyContent: "space-between"
+    justifyContent: "center"
   },
   postList: {
-    [theme.breakpoints.down("lg")]: {
-      width: "100%"
-    },
-    [theme.breakpoints.up("lg")]: {
-      width: "80%"
-    }
+    paddingTop: theme.spacing(2)
   },
   tag: {
+    paddingTop: theme.spacing(4),
+    paddingLeft: theme.spacing(2),
     [theme.breakpoints.down("lg")]: {
       display: "none"
     },
     [theme.breakpoints.up("lg")]: {
       display: "flex",
-      width: "15%"
+      width: "10%"
     }
   }
 });

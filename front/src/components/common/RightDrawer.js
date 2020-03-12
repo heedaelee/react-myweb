@@ -10,7 +10,7 @@ const styles= theme =>({
   RightDrawer:{
     backgroundColor : theme.palette.background.paper,
     border:'1px solid black',
-    padding: `${theme.spacing.unit * 1}px 0`
+    padding: theme.spacing(1)
   }
 });
 

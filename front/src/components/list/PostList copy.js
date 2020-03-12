@@ -10,27 +10,26 @@ import Grid from "@material-ui/core/Grid";
 
 const styles = theme => ({
   cardGrid: {
-    paddingTop: theme.spacing(2),
-    paddingBottom: theme.spacing(1)
+    paddingTop: theme.spacing(8),
+    paddingBottom: theme.spacing(8)
   }
 });
-
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 const PostList = props => {
   const { classes, posts, imgUrl } = props;
   console.log(`PostList에서 imgUrl : ${imgUrl}`);
-  const postList = cards.map(card => {  
+  const postList = posts.map((post, i) => {
+    const { _id, title, body, publishedDate, tags } = post.toJS();
     return (
       <PostItem
-        card={card}
-        // key={_id}
-        // title={title}
-        // body={body}
-        // publishedDate={publishedDate}
-        // tags={tags}
-        // classes={classes}
-        // img={imgUrl[i]}
+        id={_id}
+        key={_id}
+        title={title}
+        body={body}
+        publishedDate={publishedDate}
+        tags={tags}
+        classes={classes}
+        img={imgUrl[i]}
       />
     );
   });
