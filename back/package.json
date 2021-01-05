@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.19.1",
+    "axios": "^0.21.1",
     "browser-env": "^3.2.6",
     "dotenv": "^8.0.0",
     "fb": "^2.0.0",
